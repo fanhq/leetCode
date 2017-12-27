@@ -1,4 +1,5 @@
 import com.leetCode.problems.GenerateMatrix;
+import org.junit.Assert;
 import org.junit.Test;
 
 /**
@@ -9,6 +10,7 @@ public class CommonTest {
     @Test
     public void testMatrix(){
         int[][] result = GenerateMatrix.generateMatrix(5);
+        System.out.println(result.length);
     }
 
 }
