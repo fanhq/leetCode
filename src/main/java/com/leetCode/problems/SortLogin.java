@@ -24,22 +24,22 @@ public class SortLogin {
 
         File file = new File(path);
         try {
-            StringBuilder result = new StringBuilder();
+            StringBuilder result1 = new StringBuilder();
             //1
             byte[] temp = new byte[1024];
             FileInputStream fileInputStream = new FileInputStream(file);
             while (fileInputStream.read(temp) != -1){
-                result.append(new String(temp));
+                result1.append(new String(temp));
             }
-            System.out.println(result);
-            //1
-            result.setLength(0);
+            System.out.println(result1);
+            //2
+            StringBuilder result2 = new StringBuilder();
             BufferedReader bufferedReader = new BufferedReader(new FileReader(file));
             String line = null;
             while ((line = bufferedReader.readLine()) != null){
-                result.append(line);
+                result2.append(line);
             }
-            System.out.println(result);
+            System.out.println(result2);
         }catch (Exception e){
             logger.error("", e);
         }
