@@ -18,7 +18,6 @@ public class JavaIO {
             byte[] arr = new byte[1024];
             while ((len = bis.read(arr)) != -1) {
                 bos.write(arr, 0, len);
-                bos.flush();
             }
             bos.close();
             byte[] data = bos.toByteArray();
