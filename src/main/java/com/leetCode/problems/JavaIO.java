@@ -7,7 +7,7 @@ import java.io.*;
  */
 public class JavaIO {
 
-    private static final String path ="D:\\subline text\\sql";
+    private static final String path = "D:\\subline text\\sql";
 
     public static void main(String[] args) {
         try {
@@ -16,13 +16,15 @@ public class JavaIO {
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             int len;
             byte[] arr = new byte[1024];
-            while((len=bis.read(arr))!= -1){
-                bos.write(arr,0,len);
+            while ((len = bis.read(arr)) != -1) {
+                bos.write(arr, 0, len);
                 bos.flush();
             }
             bos.close();
-        }catch (Exception e){
-
+            byte[] data = bos.toByteArray();
+            System.out.println(new String(data));
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }
