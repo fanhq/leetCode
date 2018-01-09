@@ -12,6 +12,7 @@ public class JavaIO {
     public static void main(String[] args) {
         try {
             File file = new File(path);
+            //1、用于持续输出流的写法，不会阻塞
             BufferedInputStream bis = new BufferedInputStream(new FileInputStream(file));
             ByteArrayOutputStream bos = new ByteArrayOutputStream();
             int len;
