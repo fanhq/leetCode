@@ -1,4 +1,4 @@
-package com.leetCode.problems;
+package com.leetCode;
 
 
 /**
