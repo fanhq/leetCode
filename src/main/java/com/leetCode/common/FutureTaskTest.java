@@ -1,4 +1,4 @@
-package com.leetCode.conmon;
+package com.leetCode.common;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -1,4 +1,4 @@
-package com.leetCode.conmon;
+package com.leetCode.common;
 
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
