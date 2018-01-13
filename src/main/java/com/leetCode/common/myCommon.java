@@ -5,6 +5,5 @@ package com.leetCode.common;
  */
 public class myCommon {
 
-    public static boolean flag = true;
 
 }
