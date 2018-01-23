@@ -2,22 +2,17 @@ package com.leetCode;
 
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by Hachel on 2018/1/2
  */
 public class Application {
 
-
     public static void main(String[] args) {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
-        Calendar cal = Calendar.getInstance();
-        cal.add(Calendar.DATE, -1);
-        String time = sdf.format(cal.getTime());
-        System.out.println(time);
-        System.out.println(cal.getTimeInMillis());
-        System.out.println(System.currentTimeMillis());
+        SimpleDateFormat DATA_FORMAT_YYYY_MM_DD_HH_MM_SS = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String crmQueryTime = DATA_FORMAT_YYYY_MM_DD_HH_MM_SS.format(new Date());
+        System.out.println(crmQueryTime);
     }
 
 }
