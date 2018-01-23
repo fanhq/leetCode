@@ -33,7 +33,7 @@ public class RegisterClient {
             ServiceInstance<ServerPayload> host1 = ServiceInstance.<ServerPayload>builder()
                     .id("host1")
                     .name(SERVICE_NAME)
-                    .port(888)
+                    .port(8888)
                     .address("10.19.13.47")
                     .payload(new ServerPayload("YN", 5))
                     .uriSpec(new UriSpec("{scheme}://{address}:{port}"))
