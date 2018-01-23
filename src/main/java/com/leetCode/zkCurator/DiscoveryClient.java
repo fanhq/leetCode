@@ -34,7 +34,6 @@ public class DiscoveryClient {
             for(ServiceInstance<ServiceDetail> service : services) {
                 System.out.println(service.getPayload());
                 System.out.println(service.getAddress() + "\t" + service.getPort());
-                System.out.println("---------------------");
             }
 
             serviceDiscovery.close();
