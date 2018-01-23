@@ -43,12 +43,12 @@ public class Register {
             //服务注册
             serviceDiscovery.registerService(instance);
             serviceDiscovery.start();
+            System.out.println("register successful");
 
             TimeUnit.SECONDS.sleep(70);
 
             serviceDiscovery.close();
             client.close();
-            System.out.println("register successful");
         } catch (Exception e) {
             e.printStackTrace();
         }
