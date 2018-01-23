@@ -38,7 +38,7 @@ public class Register {
             ServiceDiscovery<ServiceDetail> serviceDiscovery = ServiceDiscoveryBuilder.builder(ServiceDetail.class)
                     .client(client)
                     .serializer(new JsonInstanceSerializer<ServiceDetail>(ServiceDetail.class))
-                    .basePath("/base")
+                    .basePath("/ai/obc/")
                     .build();
             //服务注册
             serviceDiscovery.registerService(instance);
@@ -48,6 +48,7 @@ public class Register {
 
             serviceDiscovery.close();
             client.close();
+            System.out.println("register successful");
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -25,12 +25,12 @@ public class DiscoveryClient {
 
             ServiceDiscovery<ServiceDetail> serviceDiscovery = ServiceDiscoveryBuilder.builder(ServiceDetail.class)
                     .client(client)
-                    .basePath("/base")
+                    .basePath("/ai/obc/")
                     .build();
             serviceDiscovery.start();
 
             //根据名称获取服务
-            Collection<ServiceInstance<ServiceDetail>> services = serviceDiscovery.queryForInstances("tomcat");
+            Collection<ServiceInstance<ServiceDetail>> services = serviceDiscovery.queryForInstances("iop");
             for(ServiceInstance<ServiceDetail> service : services) {
                 System.out.println(service.getPayload());
                 System.out.println(service.getAddress() + "\t" + service.getPort());
