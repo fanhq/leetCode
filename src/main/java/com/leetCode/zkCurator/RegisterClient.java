@@ -33,9 +33,9 @@ public class RegisterClient {
             ServiceInstance<ServerPayload> host1 = ServiceInstance.<ServerPayload>builder()
                     .id("host1")
                     .name(SERVICE_NAME)
-                    .port(21888)
-                    .address("10.99.10.1")
-                    .payload(new ServerPayload("HZ", 5))
+                    .port(888)
+                    .address("10.19.13.47")
+                    .payload(new ServerPayload("YN", 5))
                     .uriSpec(new UriSpec("{scheme}://{address}:{port}"))
                     .build();
 
@@ -44,9 +44,9 @@ public class RegisterClient {
             ServiceInstance<ServerPayload> host2 = ServiceInstance.<ServerPayload>builder()
                     .id("host2")
                     .name(SERVICE_NAME)
-                    .port(21888)
-                    .address("10.99.1.100")
-                    .payload(new ServerPayload("QD", 3))
+                    .port(9099)
+                    .address("10.19.13.48")
+                    .payload(new ServerPayload("XJ", 3))
                     .uriSpec(new UriSpec("{scheme}://{address}:{port}"))
                     .build();
 

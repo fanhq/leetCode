@@ -22,7 +22,6 @@ public class DiscoveryClient {
         ServiceDiscover serviceDiscover = null;
         try {
             client = CuratorFrameworkFactory.newClient("127.0.0.1:2181", new ExponentialBackoffRetry(1000, 3));
-            ;
             client.start();
 
             serviceDiscover = new ServiceDiscover(client, DiscoveryClient.BASE_PATH);   //服务发现

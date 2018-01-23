@@ -18,13 +18,13 @@ import java.util.concurrent.ConcurrentHashMap;
 public class ServiceDiscover {
 
     private ServiceDiscovery<ServerPayload> serviceDiscovery;
-    private final ConcurrentHashMap<String, ServiceProvider<ServerPayload>> serviceProviderMap = new ConcurrentHashMap<String, ServiceProvider<ServerPayload>>();
+    private final ConcurrentHashMap<String, ServiceProvider<ServerPayload>> serviceProviderMap = new ConcurrentHashMap<>();
 
     public ServiceDiscover(CuratorFramework client , String basePath){
         serviceDiscovery = ServiceDiscoveryBuilder.builder(ServerPayload.class)
                 .client(client)
                 .basePath(basePath)
-                .serializer(new JsonInstanceSerializer<ServerPayload>(ServerPayload.class))
+                .serializer(new JsonInstanceSerializer<>(ServerPayload.class))
                 .build();
     }
 

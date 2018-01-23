@@ -23,7 +23,7 @@ public class ServiceRegistry {
         this.client = client;
         serviceDiscovery = ServiceDiscoveryBuilder.builder(ServerPayload.class)
                 .client(client)
-                .serializer(new JsonInstanceSerializer<ServerPayload>(ServerPayload.class))
+                .serializer(new JsonInstanceSerializer<>(ServerPayload.class))
                 .basePath(basePath)
                 .build();
     }
