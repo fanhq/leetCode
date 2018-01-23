@@ -22,8 +22,8 @@ public class RegisterClient {
 
         CuratorFramework client = null;
         ServiceRegistry serviceRegistry = null;
-        try{
-            client = CuratorFrameworkFactory.newClient("127.0.0.1:2181", new ExponentialBackoffRetry(1000, 3));;
+        try {
+            client = CuratorFrameworkFactory.newClient("127.0.0.1:2181", new ExponentialBackoffRetry(1000, 3));
             client.start();
 
             serviceRegistry = new ServiceRegistry(client, BASE_PATH);
@@ -57,16 +57,16 @@ public class RegisterClient {
             TimeUnit.MINUTES.sleep(1);
 
             Collection<ServiceInstance<ServerPayload>> list = serviceRegistry.queryForInstances(SERVICE_NAME);
-            if(list!=null && list.size()>0){
-                System.out.println("service:"+SERVICE_NAME+" provider list:"+ JSON.toJSONString(list));
+            if (list != null && list.size() > 0) {
+                System.out.println("service:" + SERVICE_NAME + " provider list:" + JSON.toJSONString(list));
             } else {
-                System.out.println("service:"+SERVICE_NAME+" provider is empty...");
+                System.out.println("service:" + SERVICE_NAME + " provider is empty...");
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if(serviceRegistry!=null){
+            if (serviceRegistry != null) {
                 try {
                     serviceRegistry.close();
                 } catch (Exception e) {
