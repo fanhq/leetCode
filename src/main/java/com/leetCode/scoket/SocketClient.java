@@ -14,7 +14,7 @@ public class SocketClient {
 
     public static void main(String[] args) {
         String msgPackageFmt = "3|10086|%s|10|云南移动欢迎您！||SELFSALEPOOL|N";
-        long phoneNum = 15905100000l;
+        long phoneNum = 15906100000l;
         for (int i = 1; i <100; i ++){
             String msgPackage = String.format(msgPackageFmt, phoneNum + i) ;
             sentMsg(msgPackage);
