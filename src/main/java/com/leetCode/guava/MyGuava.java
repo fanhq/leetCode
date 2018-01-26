@@ -1,4 +1,4 @@
-package com.leetCode.Guava;
+package com.leetCode.guava;
 
 /**
  * Created by Hachel on 2018/1/23
