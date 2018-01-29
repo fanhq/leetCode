@@ -25,6 +25,7 @@ public class ExecutorPool {
                     }
                 }
             });
+            //必须要先shutdown，再调用awaitTermination
             executor.shutdown();
             boolean isTermination = executor.awaitTermination(10, TimeUnit.SECONDS);
             System.out.println(isTermination);
