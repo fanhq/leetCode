@@ -3,6 +3,7 @@ package com.leetCode.guava;
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.common.io.Files;
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -27,6 +28,8 @@ public class MyGuava {
             // 将文件内容一行一行读取出来
             File file = new File("");
             List<String> readLines = Files.readLines(file, Charsets.UTF_8);
+
+            FileUtils.forceDelete(file);
 
         } catch (IOException e) {
             e.printStackTrace();

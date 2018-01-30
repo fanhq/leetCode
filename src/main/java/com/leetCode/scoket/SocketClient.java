@@ -14,7 +14,7 @@ public class SocketClient {
 
     public static void main(String[] args) {
         String msgPackageFmt = "3|10086|%s|10|云南移动欢迎您！||SELFSALEPOOL|N";
-        long phoneNum = 15906100000l;
+        long phoneNum = 15907100000l;
         for (int i = 1; i <100; i ++){
             String msgPackage = String.format(msgPackageFmt, phoneNum + i) ;
             sentMsg(msgPackage);
@@ -31,7 +31,7 @@ public class SocketClient {
         Socket socket = null;
         try {
             socket = new Socket();
-            SocketAddress address = new InetSocketAddress("127.0.0.1", 8298);
+            SocketAddress address = new InetSocketAddress("10.1.241.103", 8298);
             socket.connect(address, 10000);
             socket.setSoTimeout(10000);
 
