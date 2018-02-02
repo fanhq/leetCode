@@ -6,8 +6,12 @@ package com.leetCode;
  */
 public class Application {
 
-    public static void main(String[] args) {
+    private final static char DEFAULT_SPLIT_KEY = 1;
 
+    public static void main(String[] args) {
+        String msgs = "10|13999999999|msg|";
+        String[] s = msgs.split("\\|");
+        System.out.println(s.length);
     }
 
 }
