@@ -13,7 +13,12 @@ public class JavaIO {
     private static final String path = "D:\\subline text\\sql";
 
     public static void main(String[] args) {
+
         try {
+            //写文件
+            BufferedWriter osw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File(""), true), "GBK"));
+            osw.write("");
+            osw.close();
             //默认加载resource下面找
             InputStream is = Application.class.getClassLoader().getResourceAsStream("application.properties");
             Properties properties = new Properties();
