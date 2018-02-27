@@ -19,7 +19,7 @@ public class ZKConnect {
         try {
             ZooKeeper zk = new ZooKeeper(connectionString, sessionTimeout, null);
             zk.addAuthInfo("digest", ":".getBytes());
-            List<String> children = zk.getChildren("/iop/rpc", new Watcher() {
+            List<String> children = zk.getChildren("/iop/rpc/smsgate-rpc", new Watcher() {
                 public void process(WatchedEvent event) {
                     System.out.println("this is children node event");
                     System.out.println(event);
