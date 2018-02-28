@@ -81,13 +81,14 @@ public class FeatureTest {
         for (int i = 0; i < 5; i++) {
             List<FeatureDto> list = new ArrayList<>();
             for (int j = 0; j < 150; j++) {
-                FeatureDto featureDto = new FeatureDto();
-                featureDto.setColumnNum(getRandomNum());
+                int columnNum = getRandomNum();
                 for (int n =0; n< 10; n++){
+                    FeatureDto featureDto = new FeatureDto();
+                    featureDto.setColumnNum(columnNum);
                     featureDto.setBigDataFeature(getRandomCharacter());
                     featureDto.setMyFeature(getRandomCharacter());
+                    list.add(featureDto);
                 }
-                list.add(featureDto);
             }
             codeBook.put(String.format("%08d", i), list);
         }
