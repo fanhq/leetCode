@@ -1,5 +1,7 @@
 package com.leetCode.iop;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import java.util.*;
 
 /**
@@ -62,8 +64,8 @@ public class FeatureTest {
     }
 
     //获取随机字母
-    public static char getRandomCharacter(char ch1, char ch2) {
-        return (char) (ch1 + Math.random() * (ch2 - ch1 + 1));//因为random<1.0，所以需要+1，才能取到ch2
+    public static char getRandomCharacter() {
+        return  RandomStringUtils.randomAscii(1).charAt(0);
     }
 
     //获取随机数
@@ -80,11 +82,13 @@ public class FeatureTest {
 
         for (int i = 0; i < 5; i++) {
             List<FeatureDto> list = new ArrayList<>();
-            for (int j = 0; j < 1500; j++) {
+            for (int j = 0; j < 150; j++) {
                 FeatureDto featureDto = new FeatureDto();
                 featureDto.setColumnNum(getRandomNum());
-                featureDto.setBigDataFeature(getRandomCharacter('a', 'z'));
-                featureDto.setMyFeature(getRandomCharacter('a', 'z'));
+                for (int n =0; n< 10; n++){
+                    featureDto.setBigDataFeature(getRandomCharacter());
+                    featureDto.setMyFeature(getRandomCharacter());
+                }
                 list.add(featureDto);
             }
             codeBook.put(String.format("%08d", i), list);
