@@ -18,8 +18,6 @@ public class FeatureTest {
         long start = System.currentTimeMillis();
         StringBuilder newDna = new StringBuilder(dna);
         for (FeatureDto featureDto : list) {
-            //System.out.println(dna.charAt(featureDto.getColumnNum()- 1));
-            //System.out.println(featureDto.getBigDataFeature());
             if (dna.charAt(featureDto.getColumnNum() - 1) == featureDto.getBigDataFeature()) {
                 newDna.replace(featureDto.getColumnNum() - 1, featureDto.getColumnNum(), String.valueOf(featureDto.getMyFeature()));
             }
