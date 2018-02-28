@@ -11,34 +11,35 @@ public class FeatureTest {
     public static void main(String[] args) {
         Map<String, List<FeatureDto>> book = getCodeBook();
         List<FeatureDto> list = book.get("00000001");
-//        String dna = getDNA(list);
-//        System.out.println(dna);
-//        long start = System.currentTimeMillis();
-//        StringBuilder newDna = new StringBuilder(dna);
-//        for (FeatureDto featureDto : list) {
-//            //System.out.println(dna.charAt(featureDto.getColumnNum()- 1));
-//            //System.out.println(featureDto.getBigDataFeature());
-//            if (dna.charAt(featureDto.getColumnNum() - 1) == featureDto.getBigDataFeature()) {
-//                newDna.replace(featureDto.getColumnNum() - 1, featureDto.getColumnNum(), String.valueOf(featureDto.getMyFeature()));
-//            }
-//        }
-//        long end = System.currentTimeMillis();
-//        System.out.println(end - start);
-//        System.out.println(newDna.toString());
-        List<String> dnas = getDNAs(list);
+        String dna = getDNA(list);
+        System.out.println(dna);
         long start = System.currentTimeMillis();
-        for (String dna : dnas) {
+        StringBuilder newDna = new StringBuilder(dna);
+        for (FeatureDto featureDto : list) {
+            //System.out.println(dna.charAt(featureDto.getColumnNum()- 1));
+            //System.out.println(featureDto.getBigDataFeature());
+            if (dna.charAt(featureDto.getColumnNum() - 1) == featureDto.getBigDataFeature()) {
+                newDna.replace(featureDto.getColumnNum() - 1, featureDto.getColumnNum(), String.valueOf(featureDto.getMyFeature()));
+            }
+        }
+        long end = System.currentTimeMillis();
+        System.out.println(end - start);
+        System.out.println(newDna.toString());
+
+        List<String> dnas = getDNAs(list);
+        long start1 = System.currentTimeMillis();
+        for (String d : dnas) {
             //System.out.println(dna);
-            StringBuilder newDna = new StringBuilder(dna);
+            StringBuilder nd = new StringBuilder(d);
             for (FeatureDto featureDto : list) {
-                if (dna.charAt(featureDto.getColumnNum() - 1) == featureDto.getBigDataFeature()) {
-                    newDna.replace(featureDto.getColumnNum() - 1, featureDto.getColumnNum(), String.valueOf(featureDto.getMyFeature()));
+                if (d.charAt(featureDto.getColumnNum() - 1) == featureDto.getBigDataFeature()) {
+                    nd.replace(featureDto.getColumnNum() - 1, featureDto.getColumnNum(), String.valueOf(featureDto.getMyFeature()));
                 }
             }
            // System.out.println(newDna.toString());
         }
-        long end = System.currentTimeMillis();
-        System.out.println(end - start);
+        long end1 = System.currentTimeMillis();
+        System.out.println(end1 - start1);
     }
 
     public static List<String> getDNAs(List<FeatureDto> list) {
