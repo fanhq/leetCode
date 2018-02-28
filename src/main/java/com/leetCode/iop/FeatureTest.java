@@ -79,7 +79,7 @@ public class FeatureTest {
 
         for (int i = 0; i < 5; i++) {
             List<FeatureDto> list = new ArrayList<>();
-            for (int j = 0; j < 150; j++) {
+            for (int j = 0; j < 1500; j++) {
                 FeatureDto featureDto = new FeatureDto();
                 featureDto.setColumnNum(getRandomNum());
                 featureDto.setBigDataFeature(getRandomCharacter('a', 'z'));
