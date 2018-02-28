@@ -14,6 +14,8 @@ public class FeatureTest {
         Map<String, List<FeatureDto>> book = getCodeBook();
         List<FeatureDto> list = book.get("00000001");
         String dna = getDNA(list);
+
+        System.out.println("------begin------");
         System.out.println(dna);
         long start = System.currentTimeMillis();
         StringBuilder newDna = new StringBuilder(dna);
