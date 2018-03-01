@@ -10,12 +10,12 @@ import java.util.Properties;
 /**
  * Created by Hachel on 2018/3/1
  */
-public class KafkaProducer {
+public class MyKafkaProducer {
 
     private final org.apache.kafka.clients.producer.KafkaProducer<String, String> producer;
     public final static String TOPIC = "hachel";
 
-    private KafkaProducer(){
+    private MyKafkaProducer(){
         Properties props = new Properties();
         props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG,"127.0.0.1:9092");
         props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG,StringSerializer.class.getName());
@@ -51,7 +51,7 @@ public class KafkaProducer {
     }
 
     public static void main( String[] args ) {
-        new KafkaProducer().produce();
+        new MyKafkaProducer().produce();
     }
 
 }
