@@ -48,9 +48,9 @@ public class RSAEncrypt {
         RSAPublicKey publicKey = (RSAPublicKey) keyPair.getPublic();
         try {
             // 得到公钥字符串
-            String publicKeyString = new String(Base64.encodeBase64(publicKey.getEncoded())) ;
+            String publicKeyString = Base64.encodeBase64String(publicKey.getEncoded()) ;
             // 得到私钥字符串
-            String privateKeyString =new String(Base64.encodeBase64(privateKey.getEncoded()));
+            String privateKeyString =Base64.encodeBase64String(privateKey.getEncoded());
             // 将密钥对写入到文件
             FileWriter pubfw = new FileWriter(filePath + "/publicKey.keystore");
             FileWriter prifw = new FileWriter(filePath + "/privateKey.keystore");
