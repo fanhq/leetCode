@@ -1,8 +1,6 @@
 package com.leetCode;
 
 
-import org.apache.commons.codec.binary.Base64;
-
 /**
  * Created by Hachel on 2018/1/2
  */
@@ -38,17 +36,17 @@ public class Application {
 ////            calendar.add(Calendar.DATE, -10);
 ////            System.out.println(System.currentTimeMillis());
 ////            System.out.println(calendar.getTimeInMillis());
-            byte[] a = Base64.decodeBase64("yJFRsJ5oQ2s=");
-            System.out.println(a.length);
-            for (byte b : a) {
-                System.out.print(b);
-            }
-            System.out.println();
-            byte[] b = String.valueOf(a).getBytes();
-            System.out.println(b.length);
-            for (byte b1 : b) {
-                System.out.print(b1);
-            }
+//            byte[] a = Base64.decodeBase64("yJFRsJ5oQ2s=");
+//            System.out.println(a.length);
+//            for (byte b : a) {
+//                System.out.print(b);
+//            }
+//            System.out.println();
+//            byte[] b = String.valueOf(a).getBytes();
+//            System.out.println(b.length);
+//            for (byte b1 : b) {
+//                System.out.print(b1);
+//            }
 
         } catch (Exception e) {
             e.printStackTrace();
