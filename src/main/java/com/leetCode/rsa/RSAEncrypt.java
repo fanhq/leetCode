@@ -164,7 +164,7 @@ public class RSAEncrypt {
      * @return
      * @throws Exception 加密过程中的异常信息
      */
-    public static byte[] encrypt(RSAPublicKey publicKey, byte[] plainTextData)
+    public static byte[] encrypt(PublicKey publicKey, byte[] plainTextData)
             throws Exception {
         if (publicKey == null) {
             throw new Exception("加密公钥为空, 请设置");
@@ -198,7 +198,7 @@ public class RSAEncrypt {
      * @return
      * @throws Exception 加密过程中的异常信息
      */
-    public static byte[] encrypt(RSAPrivateKey privateKey, byte[] plainTextData)
+    public static byte[] encrypt(PrivateKey privateKey, byte[] plainTextData)
             throws Exception {
         if (privateKey == null) {
             throw new Exception("加密私钥为空, 请设置");
@@ -232,7 +232,7 @@ public class RSAEncrypt {
      * @return 明文
      * @throws Exception 解密过程中的异常信息
      */
-    public static byte[] decrypt(RSAPrivateKey privateKey, byte[] cipherData)
+    public static byte[] decrypt(PrivateKey privateKey, byte[] cipherData)
             throws Exception {
         if (privateKey == null) {
             throw new Exception("解密私钥为空, 请设置");
@@ -267,7 +267,7 @@ public class RSAEncrypt {
      * @return 明文
      * @throws Exception 解密过程中的异常信息
      */
-    public static byte[] decrypt(RSAPublicKey publicKey, byte[] cipherData)
+    public static byte[] decrypt(PublicKey publicKey, byte[] cipherData)
             throws Exception {
         if (publicKey == null) {
             throw new Exception("解密公钥为空, 请设置");
