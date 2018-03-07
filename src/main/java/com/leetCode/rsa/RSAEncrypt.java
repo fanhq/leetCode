@@ -99,13 +99,13 @@ public class RSAEncrypt {
      * @param publicKeyStr 公钥数据字符串
      * @throws Exception 加载公钥时产生的异常
      */
-    public static RSAPublicKey loadPublicKeyByStr(String publicKeyStr)
+    public static PublicKey loadPublicKeyByStr(String publicKeyStr)
             throws Exception {
         try {
             byte[] buffer = Base64.decodeBase64(publicKeyStr);
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(buffer);
-            return (RSAPublicKey) keyFactory.generatePublic(keySpec);
+            return  keyFactory.generatePublic(keySpec);
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("无此算法");
         } catch (InvalidKeySpecException e) {
@@ -140,13 +140,13 @@ public class RSAEncrypt {
         }
     }
 
-    public static RSAPrivateKey loadPrivateKeyByStr(String privateKeyStr)
+    public static PrivateKey loadPrivateKeyByStr(String privateKeyStr)
             throws Exception {
         try {
             byte[] buffer = Base64.decodeBase64(privateKeyStr);
             PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(buffer);
             KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-            return (RSAPrivateKey) keyFactory.generatePrivate(keySpec);
+            return keyFactory.generatePrivate(keySpec);
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("无此算法");
         } catch (InvalidKeySpecException e) {
