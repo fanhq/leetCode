@@ -66,13 +66,13 @@ public class Client {
                     sc.register(selector, SelectionKey.OP_WRITE);
                     sc.register(selector, SelectionKey.OP_READ);
 
-                } else if (key.isReadable()){//读取数据
+                } else if (key.isReadable()) {//读取数据
                     System.out.print("receive message:");
                     SocketChannel client = (SocketChannel) key.channel();
                     //将缓冲区清空以备下次读取
                     readBuffer.clear();
                     int num = client.read(readBuffer);
-                    System.out.println(new String(readBuffer.array(),0, num));
+                    System.out.println(new String(readBuffer.array(), 0, num));
                     //注册读操作，下一次读取
                     sc.register(selector, SelectionKey.OP_WRITE);
                 }
