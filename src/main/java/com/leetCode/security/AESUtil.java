@@ -1,4 +1,4 @@
-package com.leetCode.rsa;
+package com.leetCode.security;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
