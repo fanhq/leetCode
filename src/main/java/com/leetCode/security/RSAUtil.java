@@ -21,7 +21,7 @@ public class RSAUtil {
     private final static Logger logger = LoggerFactory.getLogger(RSAUtil.class);
 
     /**
-     * 密钥算法
+     * 算法
      */
     public static final String ALGORITHM = "RSA";
 
