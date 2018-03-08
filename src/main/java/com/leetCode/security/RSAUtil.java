@@ -80,7 +80,7 @@ public class RSAUtil {
         Cipher cipher = null;
         try {
             byte[] buffer = Base64.decodeBase64(publicKeyStr);
-            KeyFactory keyFactory = KeyFactory.getInstance("RSA");
+            KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(buffer);
             PublicKey publicKey = keyFactory.generatePublic(keySpec);
             cipher = Cipher.getInstance(ALGORITHM);
