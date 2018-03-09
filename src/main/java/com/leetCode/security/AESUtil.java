@@ -21,6 +21,11 @@ public class AESUtil {
     private final static Logger logger = LoggerFactory.getLogger(AESUtil.class);
 
     /**
+     * 默认加密秘钥
+     */
+    public final static String DEFAULT_KEY = "MIGfMA0GCSqGSIb3DQ";
+
+    /**
      * 密钥算法
      */
     public static final String KEY_ALGORITHM = "AES";
