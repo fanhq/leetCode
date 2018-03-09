@@ -42,9 +42,15 @@ public class RSAMain {
 
         try {
             String pKeyStr = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDQMBH7";
-            AESUtil.encrypt("D:\\temp file\\aa.txt", "D:\\temp file\\bb.txt", pKeyStr);
-            AESUtil.decrypt("D:\\temp file\\bb.txt", "D:\\temp file\\cc.txt", pKeyStr);
-        }catch (Exception e){
+//            AESUtil.encrypt("D:\\temp file\\aa.txt", "D:\\temp file\\bb.txt", pKeyStr);
+//            AESUtil.decrypt("D:\\temp file\\bb.txt", "D:\\temp file\\cc.txt", pKeyStr);
+            String plainText = "hello worldhello worldhello worldhello worldhello world";
+            byte[] cipher =  AESUtil.encrypt(plainText.getBytes(), pKeyStr);
+            byte[] restr = AESUtil.decrypt(cipher, pKeyStr);
+            System.out.println("原文：" + plainText);
+            //System.out.println("密文：" + cipher);
+            System.out.println("解密：" + new String(restr));
+        } catch (Exception e) {
 
         }
 

@@ -107,6 +107,37 @@ public class AESUtil {
     }
 
     /**
+     * 把文件srcFile加密后存储为destFile
+     *
+     * @param plainByte   加密后的文件
+     * @param privateKey 密钥
+     * @throws GeneralSecurityException
+     * @throws IOException
+     */
+    public static byte[] encrypt(byte[] plainByte, String privateKey) throws GeneralSecurityException, IOException {
+        Key key = getKey(privateKey);
+        Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+        return cipher.doFinal(plainByte);
+    }
+
+
+    /**
+     * 把文件srcFile解密后存储为destFile
+     *
+     * @param encrypByte   解密后的文件
+     * @param privateKey 密钥
+     * @throws GeneralSecurityException
+     * @throws IOException
+     */
+    public static byte[] decrypt(byte[] encrypByte, String privateKey) throws GeneralSecurityException {
+        Key key = getKey(privateKey);
+        Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+        cipher.init(Cipher.DECRYPT_MODE, key);
+        return cipher.doFinal(encrypByte);
+    }
+
+    /**
      * 根据filePath创建相应的目录
      *
      * @param filePath 要创建的文件路经
