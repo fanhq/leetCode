@@ -122,6 +122,13 @@
             <version>1.0.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.ai.obc.iop.redis</groupId>
+            <artifactId>iop-reids-util</artifactId>
+            <version>1.0.0-RELEASES</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>

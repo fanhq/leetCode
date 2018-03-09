@@ -29,7 +29,7 @@ public class RSAUtil {
     /**
      * String to hold name of the encryption padding.
      */
-    public static final String PADDING = "RSA/NONE/NoPadding";
+    public static final String PADDING = "RSA/None/NoPadding";
 
     /**
      * String to hold name of the security provider.
@@ -40,6 +40,11 @@ public class RSAUtil {
      * key length
      */
     public static final int KEY_LENGTH = 1024;
+
+    /**
+     * (key length)/8 = BLOCK_SIZE
+     */
+    public static final int BLOCK_SIZE = 128;
 
     static {
         Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
@@ -58,22 +63,21 @@ public class RSAUtil {
         if (privateKeyStr == null) {
             throw new Exception("解密私钥为空, 请设置");
         }
-        Cipher cipher = null;
         try {
             byte[] buffer = Base64.decodeBase64(privateKeyStr);
             PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(buffer);
             KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM, PROVIDER);
             PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
-            cipher = Cipher.getInstance(PADDING, PROVIDER);
+            Cipher cipher = Cipher.getInstance(PADDING, PROVIDER);
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
             int inputLen = cipherData.length;
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             int offSet = 0;
 
-            for (int i = 0; inputLen - offSet > 0; offSet = i * 128) {
+            for (int i = 0; inputLen - offSet > 0; offSet = i * BLOCK_SIZE) {
                 byte[] cache;
-                if (inputLen - offSet > 128) {
-                    cache = cipher.doFinal(cipherData, offSet, 128);
+                if (inputLen - offSet > BLOCK_SIZE) {
+                    cache = cipher.doFinal(cipherData, offSet, BLOCK_SIZE);
                 } else {
                     cache = cipher.doFinal(cipherData, offSet, inputLen - offSet);
                 }
@@ -109,22 +113,21 @@ public class RSAUtil {
         if (publicKeyStr == null) {
             throw new Exception("加密公钥为空, 请设置");
         }
-        Cipher cipher = null;
         try {
             byte[] buffer = Base64.decodeBase64(publicKeyStr);
             KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM, PROVIDER);
             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(buffer);
             PublicKey publicKey = keyFactory.generatePublic(keySpec);
-            cipher = Cipher.getInstance(PADDING, PROVIDER);
+            Cipher cipher = Cipher.getInstance(PADDING, PROVIDER);
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
             int inputLen = plainTextData.length;
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             int offSet = 0;
 
-            for (int i = 0; inputLen - offSet > 0; offSet = i * 117) {
+            for (int i = 0; inputLen - offSet > 0; offSet = i * BLOCK_SIZE) {
                 byte[] cache;
-                if (inputLen - offSet > 117) {
-                    cache = cipher.doFinal(plainTextData, offSet, 117);
+                if (inputLen - offSet > BLOCK_SIZE) {
+                    cache = cipher.doFinal(plainTextData, offSet, BLOCK_SIZE);
                 } else {
                     cache = cipher.doFinal(plainTextData, offSet, inputLen - offSet);
                 }

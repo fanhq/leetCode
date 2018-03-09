@@ -48,6 +48,19 @@ public class Application {
 //                System.out.print(b1);
 //            }
 
+//            RedisTemplate<String, String> stringRedisTemplate = RedisTemplateUtil.newInstance(String.class);
+//            ListOperations<String, String> listOperations = stringRedisTemplate.opsForList();
+////            List<String> list = new ArrayList<>();
+////            list.add("1");
+////            list.add("2");
+////            listOperations.leftPushAll("fanhq",list);
+//
+//            List<String> l = listOperations.range("fanhq", 0, -1);
+//            for (String s : l) {
+//                System.out.println(s);
+//            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -17,8 +17,8 @@ public class RSAMain {
 //        RSAEncrypt.genKeyPair(filepath);
 
         //String plainText = Base64.encodeBase64String(AESUtil.getKey("passwordssssssss").getEncoded());
-        String plainText ="dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd";
-        RSAUtil.genKeyPair();
+        String plainText ="dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd";
+       // RSAUtil.genKeyPair();
         System.out.println("--------------公钥加密私钥解密过程-------------------");
         //公钥加密过程
         byte[] cipherData = RSAUtil.encrypt(publicKeyStr, plainText.getBytes());
@@ -35,12 +35,14 @@ public class RSAMain {
 //        String restr = RSAUtils.decryptByPrivateKey(cipher, pri);
 //
         System.out.println("原文：" + plainText);
-        System.out.println("加密：" + cipher);
+        System.out.println("密文：" + cipher);
         System.out.println("解密：" + restr);
 //
 //        System.out.println("原文长度: " + plainText.getBytes().length);
-//        System.out.println("加密长度：" + Base64.decodeBase64(cipher).length);
-//        System.out.println("秘钥长度：" + 600);
+//        System.out.println("密文长度：" + Base64.decodeBase64(cipher).length);
+//        System.out.println("秘钥长度：" + Base64.decodeBase64(pri).length);
+//        System.out.println("公钥长度：" + Base64.decodeBase64(pub).length);
+
 
     }
 
