@@ -131,9 +131,9 @@ public class AESUtil {
      * @throws GeneralSecurityException
      */
     private static Key getKey(String secret) throws GeneralSecurityException {
-        KeyGenerator kgen = KeyGenerator.getInstance(KEY_ALGORITHM);
-        kgen.init(KEY_LENGTH, new SecureRandom(secret.getBytes()));
-        SecretKey secretKey = kgen.generateKey();
+        KeyGenerator keyGenerator = KeyGenerator.getInstance(KEY_ALGORITHM);
+        keyGenerator.init(KEY_LENGTH, new SecureRandom(secret.getBytes()));
+        SecretKey secretKey = keyGenerator.generateKey();
         return secretKey;
     }
 
