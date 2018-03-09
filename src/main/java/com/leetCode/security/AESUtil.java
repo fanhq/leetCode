@@ -40,6 +40,35 @@ public class AESUtil {
      */
     public static final String CIPHER_ALGORITHM = "AES/ECB/PKCS5Padding";
 
+    /**
+     *加密
+     *
+     * @param plainByte  需要加密的内容
+     * @param privateKey 密钥
+     * @throws GeneralSecurityException
+     * @throws IOException
+     */
+    public static byte[] encrypt(byte[] plainByte, String privateKey) throws GeneralSecurityException, IOException {
+        Key key = getKey(privateKey);
+        Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+        cipher.init(Cipher.ENCRYPT_MODE, key);
+        return cipher.doFinal(plainByte);
+    }
+
+    /**
+     * 解密
+     *
+     * @param encrypByte 加密的内容
+     * @param privateKey 密钥
+     * @throws GeneralSecurityException
+     * @throws IOException
+     */
+    public static byte[] decrypt(byte[] encrypByte, String privateKey) throws GeneralSecurityException {
+        Key key = getKey(privateKey);
+        Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
+        cipher.init(Cipher.DECRYPT_MODE, key);
+        return cipher.doFinal(encrypByte);
+    }
 
     /**
      * 把文件srcFile加密后存储为destFile
@@ -109,37 +138,6 @@ public class AESUtil {
                 fos.close();
             }
         }
-    }
-
-    /**
-     * 把文件srcFile加密后存储为destFile
-     *
-     * @param plainByte   加密后的文件
-     * @param privateKey 密钥
-     * @throws GeneralSecurityException
-     * @throws IOException
-     */
-    public static byte[] encrypt(byte[] plainByte, String privateKey) throws GeneralSecurityException, IOException {
-        Key key = getKey(privateKey);
-        Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
-        cipher.init(Cipher.ENCRYPT_MODE, key);
-        return cipher.doFinal(plainByte);
-    }
-
-
-    /**
-     * 把文件srcFile解密后存储为destFile
-     *
-     * @param encrypByte   解密后的文件
-     * @param privateKey 密钥
-     * @throws GeneralSecurityException
-     * @throws IOException
-     */
-    public static byte[] decrypt(byte[] encrypByte, String privateKey) throws GeneralSecurityException {
-        Key key = getKey(privateKey);
-        Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
-        cipher.init(Cipher.DECRYPT_MODE, key);
-        return cipher.doFinal(encrypByte);
     }
 
     /**
