@@ -14,7 +14,7 @@ import java.security.SecureRandom;
 /**
  * Created by Hachel on 2018/3/7
  * <p>
- * 使用AES对文件进行加密和解密
+ * 使用AES对内容、文件进行加密和解密
  */
 public class AESUtil {
 
