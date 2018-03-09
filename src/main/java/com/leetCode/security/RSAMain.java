@@ -1,5 +1,7 @@
 package com.leetCode.security;
 
+import org.apache.commons.codec.binary.Base64;
+
 /**
  * Created by Hachel on 2018/3/2
  */
@@ -48,7 +50,7 @@ public class RSAMain {
             byte[] cipher =  AESUtil.encrypt(plainText.getBytes(), AESUtil.DEFAULT_KEY);
             byte[] restr = AESUtil.decrypt(cipher, AESUtil.DEFAULT_KEY);
             System.out.println("原文：" + plainText);
-            //System.out.println("密文：" + cipher);
+            System.out.println("密文：" + Base64.encodeBase64String(cipher));
             System.out.println("解密：" + new String(restr));
         } catch (Exception e) {
 
