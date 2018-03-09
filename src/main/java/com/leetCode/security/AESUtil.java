@@ -45,7 +45,7 @@ public class AESUtil {
      * @throws GeneralSecurityException
      * @throws IOException
      */
-    public void encrypt(String srcFile, String destFile, String privateKey) throws GeneralSecurityException, IOException {
+    public static void encrypt(String srcFile, String destFile, String privateKey) throws GeneralSecurityException, IOException {
         Key key = getKey(privateKey);
         Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
         cipher.init(Cipher.ENCRYPT_MODE, key);
@@ -80,7 +80,7 @@ public class AESUtil {
      * @throws GeneralSecurityException
      * @throws IOException
      */
-    public void decrypt(String srcFile, String destFile, String privateKey) throws GeneralSecurityException, IOException {
+    public static void decrypt(String srcFile, String destFile, String privateKey) throws GeneralSecurityException, IOException {
         Key key = getKey(privateKey);
         Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
         cipher.init(Cipher.DECRYPT_MODE, key);
@@ -113,7 +113,7 @@ public class AESUtil {
      * @return file        文件
      * @throws IOException
      */
-    private File mkdirFiles(String filePath) throws IOException {
+    private static File mkdirFiles(String filePath) throws IOException {
         File file = new File(filePath);
         if (!file.getParentFile().exists()) {
             file.getParentFile().mkdirs();
