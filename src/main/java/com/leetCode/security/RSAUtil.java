@@ -43,6 +43,7 @@ public class RSAUtil {
 
     /**
      * (key length)/8 = BLOCK_SIZE
+     * BouncyCastleProvider可以让每个分段加密的明文和密钥的密文长度一致，使用java默认的ProviderBLOCK_SIZE-11
      */
     public static final int BLOCK_SIZE = 128;
 
