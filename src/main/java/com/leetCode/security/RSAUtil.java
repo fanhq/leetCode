@@ -70,10 +70,10 @@ public class RSAUtil {
             PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
             Cipher cipher = Cipher.getInstance(PADDING, PROVIDER);
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
+
             int inputLen = cipherData.length;
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             int offSet = 0;
-
             for (int i = 0; inputLen - offSet > 0; offSet = i * BLOCK_SIZE) {
                 byte[] cache;
                 if (inputLen - offSet > BLOCK_SIZE) {
@@ -81,7 +81,6 @@ public class RSAUtil {
                 } else {
                     cache = cipher.doFinal(cipherData, offSet, inputLen - offSet);
                 }
-
                 out.write(cache, 0, cache.length);
                 ++i;
             }
@@ -120,10 +119,10 @@ public class RSAUtil {
             PublicKey publicKey = keyFactory.generatePublic(keySpec);
             Cipher cipher = Cipher.getInstance(PADDING, PROVIDER);
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
+
             int inputLen = plainTextData.length;
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             int offSet = 0;
-
             for (int i = 0; inputLen - offSet > 0; offSet = i * BLOCK_SIZE) {
                 byte[] cache;
                 if (inputLen - offSet > BLOCK_SIZE) {
@@ -131,11 +130,9 @@ public class RSAUtil {
                 } else {
                     cache = cipher.doFinal(plainTextData, offSet, inputLen - offSet);
                 }
-
                 out.write(cache, 0, cache.length);
                 ++i;
             }
-
             byte[] encryptedData = out.toByteArray();
             out.close();
             return encryptedData;
