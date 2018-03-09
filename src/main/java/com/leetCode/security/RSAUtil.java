@@ -21,14 +21,28 @@ public class RSAUtil {
     private final static Logger logger = LoggerFactory.getLogger(RSAUtil.class);
 
     /**
-     * 算法
+     * String to hold name of the encryption algorithm.
      */
     public static final String ALGORITHM = "RSA";
 
     /**
-     * 密钥长度
+     * String to hold name of the encryption padding.
+     */
+    public static final String PADDING = "RSA/NONE/NoPadding";
+
+    /**
+     * String to hold name of the security provider.
+     */
+    public static final String PROVIDER = "BC";
+
+    /**
+     * key length
      */
     public static final int KEY_LENGTH = 1024;
+
+    static {
+        Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
+    }
 
     /**
      * 私钥解密过程
@@ -47,9 +61,9 @@ public class RSAUtil {
         try {
             byte[] buffer = Base64.decodeBase64(privateKeyStr);
             PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(buffer);
-            KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
+            KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM, PROVIDER);
             PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
-            cipher = Cipher.getInstance("RSA");
+            cipher = Cipher.getInstance(PADDING, PROVIDER);
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
             byte[] output = cipher.doFinal(cipherData);
             return output;
@@ -80,10 +94,10 @@ public class RSAUtil {
         Cipher cipher = null;
         try {
             byte[] buffer = Base64.decodeBase64(publicKeyStr);
-            KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM);
+            KeyFactory keyFactory = KeyFactory.getInstance(ALGORITHM, PROVIDER);
             X509EncodedKeySpec keySpec = new X509EncodedKeySpec(buffer);
             PublicKey publicKey = keyFactory.generatePublic(keySpec);
-            cipher = Cipher.getInstance(ALGORITHM);
+            cipher = Cipher.getInstance(PADDING, PROVIDER);
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
             byte[] output = cipher.doFinal(plainTextData);
             return output;
@@ -99,16 +113,17 @@ public class RSAUtil {
     }
 
     /**
-     *
      * @return
      */
     public static Map<String, String> genKeyPair() {
         // KeyPairGenerator类用于生成公钥和私钥对，基于RSA算法生成对象
         KeyPairGenerator keyPairGen = null;
         try {
-            keyPairGen = KeyPairGenerator.getInstance(ALGORITHM);
+            keyPairGen = KeyPairGenerator.getInstance(ALGORITHM, PROVIDER);
         } catch (NoSuchAlgorithmException e) {
             logger.error("NoSuchAlgorithmException", e);
+        }catch (NoSuchProviderException e){
+            logger.error("NoSuchProviderException", e);
         }
         // 初始化密钥对生成器，密钥大小为96-1024位
         keyPairGen.initialize(KEY_LENGTH, new SecureRandom());
@@ -123,7 +138,6 @@ public class RSAUtil {
         keyMap.put("pubilcKey", Base64.encodeBase64String(publicKey.getEncoded()));
         // 得到私钥字符串
         keyMap.put("privateKey", Base64.encodeBase64String(privateKey.getEncoded()));
-
         return keyMap;
     }
 
