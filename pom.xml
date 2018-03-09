@@ -116,6 +116,12 @@
             <version>1.59</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.aisainfo.openplatform</groupId>
+            <artifactId>encrypt</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
     </dependencies>
 
     <build>

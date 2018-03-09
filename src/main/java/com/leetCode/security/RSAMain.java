@@ -16,18 +16,31 @@ public class RSAMain {
 //
 //        RSAEncrypt.genKeyPair(filepath);
 
+        //String plainText = Base64.encodeBase64String(AESUtil.getKey("passwordssssssss").getEncoded());
+        String plainText ="dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd";
         RSAUtil.genKeyPair();
         System.out.println("--------------公钥加密私钥解密过程-------------------");
-        String plainText = "公钥加密私钥解密0000001ssssssss";
         //公钥加密过程
         byte[] cipherData = RSAUtil.encrypt(publicKeyStr, plainText.getBytes());
         String cipher = Base64.encodeBase64String(cipherData);
         //私钥解密过程
         byte[] res = RSAUtil.decrypt(privateKeyStr, Base64.decodeBase64(cipher));
         String restr = new String(res);
+//        Map<String, Object> keyPair = RSAUtils.genKeyPair();
+//        String pub = Base64.encodeBase64String(((RSAPublicKey)keyPair.get("RSAPublicKey")).getEncoded());
+//        System.out.println(pub);
+//        String cipher = RSAUtils.encryptByPublicKey(plainText, pub);
+//        String pri = Base64.encodeBase64String(((RSAPrivateKey)keyPair.get("RSAPrivateKey")).getEncoded());
+//        System.out.println(pri);
+//        String restr = RSAUtils.decryptByPrivateKey(cipher, pri);
+//
         System.out.println("原文：" + plainText);
         System.out.println("加密：" + cipher);
         System.out.println("解密：" + restr);
+//
+//        System.out.println("原文长度: " + plainText.getBytes().length);
+//        System.out.println("加密长度：" + Base64.decodeBase64(cipher).length);
+//        System.out.println("秘钥长度：" + 600);
 
     }
 

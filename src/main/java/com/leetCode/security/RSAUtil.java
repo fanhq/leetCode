@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
+import java.io.ByteArrayOutputStream;
 import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
@@ -65,8 +66,25 @@ public class RSAUtil {
             PrivateKey privateKey = keyFactory.generatePrivate(keySpec);
             cipher = Cipher.getInstance(PADDING, PROVIDER);
             cipher.init(Cipher.DECRYPT_MODE, privateKey);
-            byte[] output = cipher.doFinal(cipherData);
-            return output;
+            int inputLen = cipherData.length;
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            int offSet = 0;
+
+            for (int i = 0; inputLen - offSet > 0; offSet = i * 128) {
+                byte[] cache;
+                if (inputLen - offSet > 128) {
+                    cache = cipher.doFinal(cipherData, offSet, 128);
+                } else {
+                    cache = cipher.doFinal(cipherData, offSet, inputLen - offSet);
+                }
+
+                out.write(cache, 0, cache.length);
+                ++i;
+            }
+
+            byte[] decryptedData = out.toByteArray();
+            out.close();
+            return decryptedData;
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("无此解密算法");
         } catch (InvalidKeyException e) {
@@ -99,8 +117,25 @@ public class RSAUtil {
             PublicKey publicKey = keyFactory.generatePublic(keySpec);
             cipher = Cipher.getInstance(PADDING, PROVIDER);
             cipher.init(Cipher.ENCRYPT_MODE, publicKey);
-            byte[] output = cipher.doFinal(plainTextData);
-            return output;
+            int inputLen = plainTextData.length;
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            int offSet = 0;
+
+            for (int i = 0; inputLen - offSet > 0; offSet = i * 117) {
+                byte[] cache;
+                if (inputLen - offSet > 117) {
+                    cache = cipher.doFinal(plainTextData, offSet, 117);
+                } else {
+                    cache = cipher.doFinal(plainTextData, offSet, inputLen - offSet);
+                }
+
+                out.write(cache, 0, cache.length);
+                ++i;
+            }
+
+            byte[] encryptedData = out.toByteArray();
+            out.close();
+            return encryptedData;
         } catch (NoSuchAlgorithmException e) {
             throw new Exception("无此加密算法");
         } catch (InvalidKeyException e) {
@@ -122,7 +157,7 @@ public class RSAUtil {
             keyPairGen = KeyPairGenerator.getInstance(ALGORITHM, PROVIDER);
         } catch (NoSuchAlgorithmException e) {
             logger.error("NoSuchAlgorithmException", e);
-        }catch (NoSuchProviderException e){
+        } catch (NoSuchProviderException e) {
             logger.error("NoSuchProviderException", e);
         }
         // 初始化密钥对生成器，密钥大小为96-1024位
