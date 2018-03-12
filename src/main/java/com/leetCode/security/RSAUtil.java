@@ -150,7 +150,7 @@ public class RSAUtil {
     }
 
     /**
-     * @return
+     * @return 返回map集合
      */
     public static Map<String, String> genKeyPair() {
         // KeyPairGenerator类用于生成公钥和私钥对，基于RSA算法生成对象
@@ -162,7 +162,7 @@ public class RSAUtil {
         } catch (NoSuchProviderException e) {
             logger.error("NoSuchProviderException", e);
         }
-        // 初始化密钥对生成器，密钥大小为96-1024位
+        // 初始化密钥对生成器，密钥大小为1024位
         keyPairGen.initialize(KEY_LENGTH, new SecureRandom());
         // 生成一个密钥对，保存在keyPair中
         KeyPair keyPair = keyPairGen.generateKeyPair();
