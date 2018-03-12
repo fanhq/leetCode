@@ -16,15 +16,15 @@ public class RSAMain {
 //        RSAEncrypt.genKeyPair(filepath);
 
         //String plainText = Base64.encodeBase64String(AESUtil.getKey("passwordssssssss").getEncoded());
-//        String plainText = "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd";
-//        // RSAUtil.genKeyPair();
-//        System.out.println("--------------公钥加密私钥解密过程-------------------");
-//        //公钥加密过程
-//        byte[] cipherData = RSAUtil.encrypt(publicKeyStr, plainText.getBytes());
-//        String cipher = Base64.encodeBase64String(cipherData);
-//        //私钥解密过程
-//        byte[] res = RSAUtil.decrypt(privateKeyStr, Base64.decodeBase64(cipher));
-//        String restr = new String(res);
+        String plainText = "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd";
+        // RSAUtil.genKeyPair();
+        System.out.println("--------------公钥加密私钥解密过程-------------------");
+        //公钥加密过程
+        byte[] cipherData = RSAUtil.encrypt(publicKeyStr, plainText.getBytes());
+        String cipher = Base64.encodeBase64String(cipherData);
+        //私钥解密过程
+        byte[] res = RSAUtil.decrypt(privateKeyStr, Base64.decodeBase64(cipher));
+        String restr = new String(res);
 //        Map<String, Object> keyPair = RSAUtils.genKeyPair();
 //        String pub = Base64.encodeBase64String(((RSAPublicKey)keyPair.get("RSAPublicKey")).getEncoded());
 //        System.out.println(pub);
@@ -33,9 +33,9 @@ public class RSAMain {
 //        System.out.println(pri);
 //        String restr = RSAUtils.decryptByPrivateKey(cipher, pri);
 
-//        System.out.println("原文：" + plainText);
-//        System.out.println("密文：" + cipher);
-//        System.out.println("解密：" + restr);
+        System.out.println("原文：" + plainText);
+        System.out.println("密文：" + cipher);
+        System.out.println("解密：" + restr);
 
 //        System.out.println("原文长度: " + plainText.getBytes().length);
 //        System.out.println("密文长度：" + Base64.decodeBase64(cipher).length);
@@ -43,15 +43,15 @@ public class RSAMain {
 //        System.out.println("公钥长度：" + Base64.decodeBase64(pub).length);
 
         try {
-            String pKeyStr = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDQMBH7";
+//            String pKeyStr = "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDQMBH7";
 //            AESUtil.encrypt("D:\\temp file\\aa.txt", "D:\\temp file\\bb.txt", pKeyStr);
 //            AESUtil.decrypt("D:\\temp file\\bb.txt", "D:\\temp file\\cc.txt", pKeyStr);
-            String plainText = "hello worldhello worldhello worldhello worldhello world";
-            byte[] cipher =  AESUtil.encrypt(plainText.getBytes(), AESUtil.DEFAULT_KEY);
-            byte[] restr = AESUtil.decrypt(cipher, AESUtil.DEFAULT_KEY);
-            System.out.println("原文：" + plainText);
-            System.out.println("密文：" + Base64.encodeBase64String(cipher));
-            System.out.println("解密：" + new String(restr));
+//            String plainText = "hello worldhello worldhello worldhello worldhello world";
+//            byte[] cipher =  AESUtil.encrypt(plainText.getBytes(), AESUtil.DEFAULT_KEY);
+//            byte[] restr = AESUtil.decrypt(cipher, AESUtil.DEFAULT_KEY);
+//            System.out.println("原文：" + plainText);
+//            System.out.println("密文：" + Base64.encodeBase64String(cipher));
+//            System.out.println("解密：" + new String(restr));
         } catch (Exception e) {
 
         }
