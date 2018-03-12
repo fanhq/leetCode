@@ -25,6 +25,7 @@ public class RSAMain {
         //私钥解密过程
         byte[] res = RSAUtil.decrypt(privateKeyStr, Base64.decodeBase64(cipher));
         String restr = new String(res);
+
 //        Map<String, Object> keyPair = RSAUtils.genKeyPair();
 //        String pub = Base64.encodeBase64String(((RSAPublicKey)keyPair.get("RSAPublicKey")).getEncoded());
 //        System.out.println(pub);
