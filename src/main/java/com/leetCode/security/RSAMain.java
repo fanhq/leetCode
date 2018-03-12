@@ -2,6 +2,8 @@ package com.leetCode.security;
 
 import org.apache.commons.codec.binary.Base64;
 
+import java.util.Map;
+
 /**
  * Created by Hachel on 2018/3/2
  */
@@ -19,13 +21,10 @@ public class RSAMain {
         byte[] res = RSAUtil.decrypt(privateKeyStr, Base64.decodeBase64(cipher));
         String restr = new String(res);
 
-//        Map<String, Object> keyPair = RSAUtils.genKeyPair();
-//        String pub = Base64.encodeBase64String(((RSAPublicKey)keyPair.get("RSAPublicKey")).getEncoded());
-//        System.out.println(pub);
-//        String cipher = RSAUtils.encryptByPublicKey(plainText, pub);
-//        String pri = Base64.encodeBase64String(((RSAPrivateKey)keyPair.get("RSAPrivateKey")).getEncoded());
-//        System.out.println(pri);
-//        String restr = RSAUtils.decryptByPrivateKey(cipher, pri);
+        Map<String, String> keyPair = RSAUtil.genKeyPair();
+        System.out.println(keyPair.get("pubilcKey"));
+        System.out.println(keyPair.get("privateKey"));
+
 
         System.out.println("原文：" + plainText);
         System.out.println("密文：" + cipher);
