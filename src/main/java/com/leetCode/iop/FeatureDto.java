@@ -11,6 +11,8 @@ public class FeatureDto {
 
     private char bigDataFeature;
 
+    private long iopKey;
+
     public int getColumnNum() {
         return columnNum;
     }
@@ -33,5 +35,13 @@ public class FeatureDto {
 
     public void setBigDataFeature(char bigDataFeature) {
         this.bigDataFeature = bigDataFeature;
+    }
+
+    public long getIopKey() {
+        return iopKey;
+    }
+
+    public void setIopKey(long iopKey) {
+        this.iopKey = iopKey;
     }
 }

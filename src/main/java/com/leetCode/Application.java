@@ -47,19 +47,23 @@ public class Application {
 //            for (byte b1 : b) {
 //                System.out.print(b1);
 //            }
-
-//            RedisTemplate<String, String> stringRedisTemplate = RedisTemplateUtil.newInstance(String.class);
-//            ListOperations<String, String> listOperations = stringRedisTemplate.opsForList();
-////            List<String> list = new ArrayList<>();
-////            list.add("1");
-////            list.add("2");
-////            listOperations.leftPushAll("fanhq",list);
 //
-//            List<String> l = listOperations.range("fanhq", 0, -1);
-//            for (String s : l) {
+//            RedisTemplate<String, String> stringRedisTemplate = RedisTemplateUtil.newInstance(String.class);
+//            SetOperations<String, String> setOperations = stringRedisTemplate.opsForSet();
+//           // setOperations.add("aaaaa", "1111");
+//            setOperations.remove("aaaaa", "1111");
+//            Set<String> set = setOperations.members("aaaaa");
+//            for (String s : set) {
 //                System.out.println(s);
 //            }
+//            File file = new File("D:/temp file/bb.txt");
+//            System.out.println(file.getAbsolutePath());
+//            System.out.println(file.isFile());
+//            System.out.println(file.isDirectory());
 
+            String a = "D:/temp file/20180313/dna/bb.txt";
+            System.out.println( a.replace("dna", "temp/dna"));
+            System.out.println(a.contains("/dna/"));
 
         } catch (Exception e) {
             e.printStackTrace();
