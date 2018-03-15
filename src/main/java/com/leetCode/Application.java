@@ -1,6 +1,9 @@
 package com.leetCode;
 
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by Hachel on 2018/1/2
  */
@@ -64,6 +67,9 @@ public class Application {
             String a = "D:/temp file/20180313/dna/bb.txt";
             System.out.println( a.replace("dna", "temp/dna"));
             System.out.println(a.contains("/dna/"));
+
+            Map<String, String> h = new HashMap<>();
+            System.out.println(h.get("d"));
 
         } catch (Exception e) {
             e.printStackTrace();

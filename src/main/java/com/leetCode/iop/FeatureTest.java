@@ -17,6 +17,8 @@ public class FeatureTest {
 
     private static final char sp = 1;
 
+    private static int offset = 0;
+
     /**
      * 数据库连接池
      **/
@@ -76,17 +78,33 @@ public class FeatureTest {
                     sb.append(String.valueOf(x.getIopKey()) + sp + x.getBigDataFeature());
                     osw.write(sb.toString());
                     osw.newLine();
+                    osw.flush();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             });
             osw.close();
-
+            StringBuilder builder = new StringBuilder("phoneno");
+            for (int i = 801; i < 833; i++) {
+                builder.append(String.valueOf(sp) + i);
+            }
             BufferedWriter oswb = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(new File("D:\\temp file\\dna.val"), true), "UTF-8"));
+            oswb.write(builder.toString());
+            oswb.newLine();
+            oswb.flush();
+            long phoneNnm = 15900100000l;
             dnas.forEach(x -> {
                 try {
+                    x = x.replace("-", "");
+                    StringBuilder t = new StringBuilder();
+                    for (int i = 0; i < x.length(); i++) {
+                        t.append(String.valueOf(sp) + String.valueOf(x.charAt(i)));
+                    }
+                    x = String.valueOf(phoneNnm + offset) + t.toString();
                     oswb.write(x);
                     oswb.newLine();
+                    oswb.flush();
+                    offset++;
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
