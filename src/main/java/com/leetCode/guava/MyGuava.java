@@ -34,6 +34,7 @@ public class MyGuava {
 
             FileUtils.forceDelete(file);
 
+
             FileUtils.forceMkdir(new File("D:\\temp file\\测试"));
 
 

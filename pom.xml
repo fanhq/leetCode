@@ -26,6 +26,18 @@
             <version>2.4</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.lucee</groupId>
+            <artifactId>commons-collections</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.ai.obc.iop.redis</groupId>
+            <artifactId>iop-reids-util</artifactId>
+            <version>1.0.0-RELEASES</version>
+        </dependency>
+
         <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
             <groupId>junit</groupId>
