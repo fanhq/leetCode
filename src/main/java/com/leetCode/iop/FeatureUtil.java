@@ -1,8 +1,6 @@
 package com.leetCode.iop;
 
 import com.ai.obc.iop.cache.RedisTemplateUtil;
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 import com.leetCode.security.AESUtil;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.collections.CollectionUtils;
@@ -10,16 +8,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.redis.core.ListOperations;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.SetOperations;
 
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by Hachel on 2018/3/5
@@ -37,11 +33,9 @@ public final class FeatureUtil {
 
     private static final char SEPARATOR = 1;
 
-    private static final int EXPIRE_DAY = 3;
+    private static final String KEYS_LIST = "BIGDATA:CODEIDS";
 
-    private static final String KEY_SETS = "BIGDATA#CODEID";
-
-    private static final ReentrantLock lock = new ReentrantLock();
+    private static final int MAX_BOOKS = 10;
 
     private static final FeatureUtil instance = new FeatureUtil();
 
@@ -49,18 +43,16 @@ public final class FeatureUtil {
 
     private final ListOperations<String, String> listOperations;
 
-    private final SetOperations<String, String> setOperations;
-
     //编码本
-    private final Cache<String, List<FeatureDto>> bookCache;
+    private final Map<String, List<FeatureDto>> bookCache;
+
 
     private final ScheduledExecutorService scheduledThreadPool;
 
     private FeatureUtil() {
         this.stringRedisTemplate = RedisTemplateUtil.newInstance(String.class);
         this.listOperations = stringRedisTemplate.opsForList();
-        this.setOperations = stringRedisTemplate.opsForSet();
-        this.bookCache = CacheBuilder.newBuilder().expireAfterWrite(EXPIRE_DAY, TimeUnit.DAYS).build();
+        this.bookCache = new HashMap<>();
         this.scheduledThreadPool = Executors.newScheduledThreadPool(1);
         try {
             init();
@@ -128,17 +120,12 @@ public final class FeatureUtil {
      * @return
      */
     private static List<FeatureDto> getBookByKey(String codeId) {
-        try {
-            lock.lock();
-            return instance.bookCache.getIfPresent(codeId);
-        } finally {
-            lock.unlock();
-        }
+        return instance.bookCache.get(codeId);
+
     }
 
     private void init() throws Exception {
-        //加载最近三天的编码本
-        loadLast3DaysBook();
+        loadBook();
         //定时任务从redis中更新编码本
         this.scheduledThreadPool.scheduleAtFixedRate(new Runnable() {
             @Override
@@ -153,28 +140,7 @@ public final class FeatureUtil {
      */
     private void onWork() {
         try {
-            Set<String> codeIds = this.setOperations.members(KEY_SETS);
-            if (CollectionUtils.isEmpty(codeIds)) {
-                logger.info("codeId set is empty");
-                return;
-            }
-            long expireTime = getExpireBeforeTime();
-            for (String codeId : codeIds) {
-                String[] wrap = codeId.split(String.valueOf(SEPARATOR));
-                List<FeatureDto> featureDtos = this.bookCache.getIfPresent(wrap[0]);
-                //没有则新增
-                if (CollectionUtils.isEmpty(featureDtos) && expireTime < Long.valueOf(wrap[1])) {
-                    List<String> codeValues = this.listOperations.range(codeId, 0, -1);
-                    if (CollectionUtils.isEmpty(codeValues)) {
-                        throw new Exception("codeValues error");
-                    }
-                    addCodeBook(codeId, codeValues);
-                }
-                //如果过期了则移除
-                if (expireTime > Long.valueOf(wrap[1])) {
-                    this.setOperations.remove(KEY_SETS, codeId);
-                }
-            }
+            loadBook();
         } catch (Exception e) {
             logger.error("update thread error :{}", e);
         }
@@ -197,47 +163,25 @@ public final class FeatureUtil {
             featureDto.setBigDataMappedVal(vals[2].charAt(0));
             featureDtos.add(featureDto);
         }
-        try {
-            lock.lock();
-            this.bookCache.put(key, featureDtos);
-        } finally {
-            lock.unlock();
-        }
+        this.bookCache.put(key, featureDtos);
     }
 
     /**
-     * 加载最近三天的编码本
-     * codeId = 大数据的编码本文件名称 + 时间戳
+     * @throws Exception
      */
-    private void loadLast3DaysBook() throws Exception {
-        Set<String> codeIdSet = this.setOperations.members(KEY_SETS);
-        if (CollectionUtils.isEmpty(codeIdSet)) {
-            logger.info("codeIds is empty");
-            return;
-        }
-        long expireTime = getExpireBeforeTime();
-        for (String codeId : codeIdSet) {
-            String[] wrap = codeId.split(String.valueOf(SEPARATOR));
-            if (Long.valueOf(wrap[1]) > expireTime) {
-                List<String> codeValues = this.listOperations.range(wrap[0], 0, -1);
-                addCodeBook(wrap[0], codeValues);
-            } else {
-                this.setOperations.remove(KEY_SETS, codeId);
+    private void loadBook() throws Exception {
+        for (int i = 0; i < MAX_BOOKS; i++) {
+            String codeId = this.listOperations.index(KEYS_LIST, i);
+            //没有则新增
+            if (this.bookCache.containsKey(codeId) == false) {
+                List<String> codeValues = this.listOperations.range(codeId, 0, -1);
+                if (CollectionUtils.isEmpty(codeValues)) {
+                    throw new Exception("codeValues error");
+                }
+                addCodeBook(codeId, codeValues);
             }
         }
     }
-
-    /**
-     * 获取三天前的时间戳
-     *
-     * @return
-     */
-    private long getExpireBeforeTime() {
-        Calendar calendar = Calendar.getInstance();
-        calendar.add(Calendar.DATE, -EXPIRE_DAY);
-        return calendar.getTimeInMillis();
-    }
-
 
     private static class FeatureDto {
 
@@ -271,6 +215,5 @@ public final class FeatureUtil {
             this.columnNum = columnNum;
         }
     }
-
 
 }

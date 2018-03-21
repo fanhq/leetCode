@@ -41,7 +41,7 @@ public class AESUtil {
     public static final String CIPHER_ALGORITHM = "AES/ECB/PKCS5Padding";
 
     /**
-     *加密
+     * 加密
      *
      * @param plainByte  需要加密的内容
      * @param privateKey 密钥
@@ -63,7 +63,8 @@ public class AESUtil {
      * @throws GeneralSecurityException
      * @throws IOException
      */
-    public static byte[] decrypt(byte[] encrypByte, String privateKey) throws GeneralSecurityException {
+    public static byte[] decrypt(byte[] encrypByte, String privateKey) throws GeneralSecurityException,
+            UnsupportedEncodingException {
         Key key = getKey(privateKey);
         Cipher cipher = Cipher.getInstance(CIPHER_ALGORITHM);
         cipher.init(Cipher.DECRYPT_MODE, key);
@@ -163,11 +164,15 @@ public class AESUtil {
      * @param secret 要生成密钥的字符串
      * @return secretKey    生成后的密钥
      * @throws GeneralSecurityException
+     * @throws UnsupportedEncodingException
      */
-    private static Key getKey(String secret) throws GeneralSecurityException {
-        KeyGenerator keyGenerator = KeyGenerator.getInstance(KEY_ALGORITHM);
-        keyGenerator.init(KEY_LENGTH, new SecureRandom(secret.getBytes()));
-        SecretKey secretKey = keyGenerator.generateKey();
+    private static Key getKey(String secret) throws GeneralSecurityException,
+            UnsupportedEncodingException {
+        KeyGenerator kgen = KeyGenerator.getInstance(KEY_ALGORITHM);
+        SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
+        random.setSeed(secret.getBytes("utf-8"));
+        kgen.init(KEY_LENGTH, random);
+        SecretKey secretKey = kgen.generateKey();
         return secretKey;
     }
 
