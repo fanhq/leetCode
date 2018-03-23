@@ -16,9 +16,9 @@ import java.security.SecureRandom;
  * <p>
  * 使用AES对内容、文件进行加密和解密
  */
-public class AESUtil {
+public class MyAESUtil {
 
-    private final static Logger logger = LoggerFactory.getLogger(AESUtil.class);
+    private final static Logger logger = LoggerFactory.getLogger(MyAESUtil.class);
 
     /**
      * 默认加密秘钥

@@ -1,7 +1,7 @@
 package com.leetCode.iop;
 
 import com.ai.obc.iop.cache.RedisTemplateUtil;
-import com.leetCode.security.AESUtil;
+import com.leetCode.security.MyAESUtil;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -155,7 +155,7 @@ public final class FeatureUtil {
         logger.info("begin load codebook key ={}", key);
         List<FeatureDto> featureDtos = new ArrayList<>();
         for (String val : codeVal) {
-            String relVal = new String(AESUtil.decrypt(Base64.decodeBase64(val), AESUtil.DEFAULT_KEY));
+            String relVal = new String(MyAESUtil.decrypt(Base64.decodeBase64(val), MyAESUtil.DEFAULT_KEY));
             String[] vals = relVal.split(String.valueOf(SEPARATOR));
             FeatureDto featureDto = new FeatureDto();
             featureDto.setColumnNum(Integer.valueOf(vals[0]));

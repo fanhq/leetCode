@@ -141,17 +141,16 @@
         </dependency>
 
         <dependency>
-            <groupId>com.aisainfo.openplatform</groupId>
-            <artifactId>encrypt</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <dependency>
             <groupId>com.ai.obc.iop.redis</groupId>
             <artifactId>iop-reids-util</artifactId>
             <version>1.0.0-RELEASES</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.ai.obc</groupId>
+            <artifactId>common-all</artifactId>
+            <version>1.0.5-RELEASES</version>
+        </dependency>
 
     </dependencies>
 
