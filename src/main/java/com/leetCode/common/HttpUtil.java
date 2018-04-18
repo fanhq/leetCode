@@ -50,7 +50,7 @@ public class HttpUtil {
     private static PoolingHttpClientConnectionManager connMgr;
     private static SSLConnectionSocketFactory sslsf;
     private static RequestConfig requestConfig;
-    private static final int MAX_TIMEOUT = 8000;
+    private static final int MAX_TIMEOUT = 3000;
     private static final String DEFAULT_CHARSET = "UTF-8";
     private static final String DEFAULT_CONTENT_TYPE = "application/json";
 

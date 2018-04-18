@@ -1,7 +1,7 @@
 package com.leetCode.iop;
 
+import com.ai.obc.common.util.AESUtil;
 import com.ai.obc.iop.cache.RedisTemplateUtil;
-import com.leetCode.security.MyAESUtil;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
@@ -35,7 +35,7 @@ public final class FeatureUtil {
 
     private static final String KEYS_LIST = "BIGDATA:CODEIDS";
 
-    private static final int MAX_BOOKS = 10;
+    private static final int LOAD_BOOK_MAX = 10;
 
     private static final FeatureUtil instance = new FeatureUtil();
 
@@ -57,7 +57,7 @@ public final class FeatureUtil {
         try {
             init();
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("FeatureUtil init");
         }
     }
 
@@ -72,13 +72,16 @@ public final class FeatureUtil {
         if (codeId == null) {
             return originDna;
         }
-        List<FeatureDto> featureDtos = getBookByKey(codeId);
+        List<FeatureDto> featureDtos = instance.bookCache.get(codeId);
         if (featureDtos == null) {
             logger.info("编码本未获取到，编码本ID:{}", codeId);
             return originDna;
         }
         StringBuilder newDna = new StringBuilder(originDna);
         for (FeatureDto featureDto : featureDtos) {
+            if (featureDto.getColumnNum() > originDna.length()) {
+                continue;
+            }
             int charIndex = featureDto.getColumnNum() - 1;
             if (featureDto.getBigDataMappedVal() == originDna.charAt(charIndex)) {
                 newDna.replace(charIndex, featureDto.getColumnNum(), String.valueOf(featureDto.getIopMappedVal()));
@@ -98,13 +101,16 @@ public final class FeatureUtil {
         if (codeId == null) {
             return originDna;
         }
-        List<FeatureDto> featureDtos = getBookByKey(codeId);
+        List<FeatureDto> featureDtos = instance.bookCache.get(codeId);
         if (featureDtos == null) {
             logger.info("编码本未获取到，编码本ID:{}", codeId);
             return originDna;
         }
         StringBuilder newDna = new StringBuilder(originDna);
         for (FeatureDto featureDto : featureDtos) {
+            if (featureDto.getColumnNum() > originDna.length()) {
+                continue;
+            }
             int charIndex = featureDto.getColumnNum() - 1;
             if (featureDto.getIopMappedVal() == originDna.charAt(charIndex)) {
                 newDna.replace(charIndex, featureDto.getColumnNum(), String.valueOf(featureDto.getBigDataMappedVal()));
@@ -114,14 +120,27 @@ public final class FeatureUtil {
     }
 
     /**
-     * 获取 获取编码本
+     * 获取某一位的大数据映射值
      *
      * @param codeId
+     * @param colNum
      * @return
      */
-    private static List<FeatureDto> getBookByKey(String codeId) {
-        return instance.bookCache.get(codeId);
-
+    public static String getMappedValByCol(String codeId, int colNum) {
+        List<FeatureDto> featureDtos = new ArrayList<>();
+        List<FeatureDto> allFeature = instance.bookCache.get(codeId);
+        if (allFeature != null) {
+            for (FeatureDto featureDto : allFeature) {
+                if (featureDto.getColumnNum() == colNum) {
+                    featureDtos.add(featureDto);
+                }
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        for (FeatureDto featureDto : featureDtos) {
+            sb.append(featureDto.toString() + " ;");
+        }
+        return sb.toString();
     }
 
     private void init() throws Exception {
@@ -149,13 +168,14 @@ public final class FeatureUtil {
     /**
      * 增加或者新增编码本
      *
-     * @param codes
+     * @param key
+     * @param codeVal
      */
     private void addCodeBook(String key, List<String> codeVal) throws Exception {
         logger.info("begin load codebook key ={}", key);
         List<FeatureDto> featureDtos = new ArrayList<>();
         for (String val : codeVal) {
-            String relVal = new String(MyAESUtil.decrypt(Base64.decodeBase64(val), MyAESUtil.DEFAULT_KEY));
+            String relVal = new String(AESUtil.decrypt(Base64.decodeBase64(val), AESUtil.DEFAULT_KEY));
             String[] vals = relVal.split(String.valueOf(SEPARATOR));
             FeatureDto featureDto = new FeatureDto();
             featureDto.setColumnNum(Integer.valueOf(vals[0]));
@@ -169,16 +189,35 @@ public final class FeatureUtil {
     /**
      * @throws Exception
      */
-    private void loadBook() throws Exception {
-        for (int i = 0; i < MAX_BOOKS; i++) {
+    private void loadBook() {
+        long maxCount = this.listOperations.size(KEYS_LIST);
+        long loadedCount = 0;
+        for (int i = 0; i < maxCount; i++) {
             String codeId = this.listOperations.index(KEYS_LIST, i);
-            //没有则新增
-            if (this.bookCache.containsKey(codeId) == false) {
-                List<String> codeValues = this.listOperations.range(codeId, 0, -1);
-                if (CollectionUtils.isEmpty(codeValues)) {
-                    throw new Exception("codeValues error");
+            if (codeId == null) {
+                continue;
+            }
+            //不让加载一套失败而不继续加载了
+            try {
+                String preCodeId = this.listOperations.index(KEYS_LIST, (i + 1));
+                //没有则新增,前一个和当前相等表示修改
+                if (this.bookCache.containsKey(codeId) == false || codeId.equals(preCodeId)) {
+                    List<String> codeValues = this.listOperations.range(codeId, 0, -1);
+                    if (CollectionUtils.isNotEmpty(codeValues)) {
+                        addCodeBook(codeId, codeValues);
+                        loadedCount++;
+                    }
+                    if (codeId.equals(preCodeId)) {
+                        this.listOperations.remove(KEYS_LIST, 1, codeId);
+                        maxCount--;
+                    }
                 }
-                addCodeBook(codeId, codeValues);
+            } catch (Exception e) {
+                logger.error("codeId :{} error:{}", codeId, e);
+            }
+            //加载超过十个后，移除其他的，map保留最新的10套编码本
+            if (loadedCount > LOAD_BOOK_MAX ) {
+                this.bookCache.remove(codeId);
             }
         }
     }
@@ -213,6 +252,15 @@ public final class FeatureUtil {
 
         public void setColumnNum(int columnNum) {
             this.columnNum = columnNum;
+        }
+
+        @Override
+        public String toString() {
+            return "{" +
+                    "iopMappedVal=" + iopMappedVal +
+                    ", bigDataMappedVal=" + bigDataMappedVal +
+                    ", columnNum=" + columnNum +
+                    '}';
         }
     }
 

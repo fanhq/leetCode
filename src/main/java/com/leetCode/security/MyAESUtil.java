@@ -38,7 +38,7 @@ public class MyAESUtil {
     /**
      * 加密/解密算法/工作模式/填充方式
      */
-    public static final String CIPHER_ALGORITHM = "AES/ECB/PKCS5Padding";
+    public static final String CIPHER_ALGORITHM = "AES";
 
     /**
      * 加密
