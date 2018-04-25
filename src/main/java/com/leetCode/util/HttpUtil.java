@@ -1,4 +1,4 @@
-package com.leetCode.common;
+package com.leetCode.util;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.http.Header;
