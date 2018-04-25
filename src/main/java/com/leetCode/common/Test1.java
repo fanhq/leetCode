@@ -33,5 +33,7 @@ public class Test1 {
         }finally {
             lock.unlock();
         }
+        Test2 test2 = new Test2();
+        test2.hashCode();
     }
 }
