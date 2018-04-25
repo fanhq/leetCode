@@ -21,7 +21,7 @@ public class SFtpClientUtil {
     /**
      * Sftp
      */
-    ChannelSftp sftp = null;
+    ChannelSftp sftp;
     /**
      * 主机
      */
@@ -173,7 +173,7 @@ public class SFtpClientUtil {
      * @throws Exception
      */
     public void download(String directory, String downloadFile, String saveDirectory) throws Exception {
-        String saveFile = saveDirectory + "//" + downloadFile;
+        String saveFile = saveDirectory + File.separator + downloadFile;
 
         this.sftp.cd(directory);
         File file = new File(saveFile);
@@ -189,7 +189,7 @@ public class SFtpClientUtil {
      * @throws Exception
      */
     public void downloadByDirectory(String directory, String saveDirectory) throws Exception {
-        String downloadFile = "";
+        String downloadFile;
         List<String> downloadFileList = this.listFiles(directory);
         Iterator<String> it = downloadFileList.iterator();
 
