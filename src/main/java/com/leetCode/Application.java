@@ -3,7 +3,6 @@ package com.leetCode;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -22,15 +21,8 @@ public class Application {
      */
     public static void main(String[] args) {
         try {
-            ConcurrentHashMap<String, String> map = new ConcurrentHashMap<>();
-            ClassLoader classLoader = Application.class.getClassLoader();
-            while (true){
-                System.out.println(classLoader.toString());
-                classLoader = classLoader.getParent();
-                if (classLoader == null) {
-                    break;
-                }
-            }
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
