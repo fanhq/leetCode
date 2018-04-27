@@ -19,17 +19,17 @@ public class MyDiscoveryClient {
     public static void main(String[] args) {
 
         CuratorFramework client = null;
-        MyServiceDiscovery serviceDiscover = null;
+        MyServiceDiscovery serviceDiscovery = null;
         try {
             client = CuratorFrameworkFactory.newClient("127.0.0.1:2181", new ExponentialBackoffRetry(1000, 3));
             client.start();
 
-            serviceDiscover = new MyServiceDiscovery(client, MyDiscoveryClient.BASE_PATH);   //服务发现
-            serviceDiscover.start();
+            serviceDiscovery = new MyServiceDiscovery(client, MyDiscoveryClient.BASE_PATH);   //服务发现
+            serviceDiscovery.start();
 
             for (int i = 0; i < 10; i++) {
 
-                ServiceInstance<ServerPayload> instance = serviceDiscover.getServiceProvider(MyDiscoveryClient.SERVICE_NAME);
+                ServiceInstance<ServerPayload> instance = serviceDiscovery.getServiceProvider(MyDiscoveryClient.SERVICE_NAME);
 
                 System.out.println("service:" + MyDiscoveryClient.SERVICE_NAME + " instance id:" + instance.getId() +
                         ", name:" + instance.getName() + ", address:" + instance.getAddress() + ", port:" + instance.getPort());
@@ -40,9 +40,9 @@ public class MyDiscoveryClient {
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            if (serviceDiscover != null) {
+            if (serviceDiscovery != null) {
                 try {
-                    serviceDiscover.close();
+                    serviceDiscovery.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
