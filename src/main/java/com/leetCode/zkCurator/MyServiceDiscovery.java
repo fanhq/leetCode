@@ -1,7 +1,6 @@
 package com.leetCode.zkCurator;
 
 import org.apache.curator.framework.CuratorFramework;
-import org.apache.curator.x.discovery.ServiceDiscovery;
 import org.apache.curator.x.discovery.ServiceDiscoveryBuilder;
 import org.apache.curator.x.discovery.ServiceInstance;
 import org.apache.curator.x.discovery.ServiceProvider;
@@ -15,12 +14,12 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * Created by Hachel on 2018/1/23
  */
-public class ServiceDiscover {
+public class MyServiceDiscovery {
 
-    private ServiceDiscovery<ServerPayload> serviceDiscovery;
+    private org.apache.curator.x.discovery.ServiceDiscovery<ServerPayload> serviceDiscovery;
     private final ConcurrentHashMap<String, ServiceProvider<ServerPayload>> serviceProviderMap = new ConcurrentHashMap<>();
 
-    public ServiceDiscover(CuratorFramework client , String basePath){
+    public MyServiceDiscovery(CuratorFramework client , String basePath){
         serviceDiscovery = ServiceDiscoveryBuilder.builder(ServerPayload.class)
                 .client(client)
                 .basePath(basePath)
