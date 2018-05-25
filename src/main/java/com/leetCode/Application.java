@@ -1,11 +1,7 @@
 package com.leetCode;
 
 
-import com.leetCode.util.HttpUtil;
-
-import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.TimeUnit;
+import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
@@ -24,32 +20,27 @@ public class Application {
      */
     public static void main(String[] args) {
         try {
-
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println(1);
-                    System.out.println(HttpUtil.doGet("http://127.0.0.1:8080/demo/hello?publicKey=sdfwe3"));
-                }
-            });
-
-
-            Thread thread1 = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    System.out.println(2);
-                    System.out.println(HttpUtil.doGet("http://127.0.0.1:8080/demo/hello?publicKey=sdfwe3"));
-                }
-            });
-
+            FutureTask futureTask = new FutureTask(new Test());
+            Thread thread = new Thread(futureTask);
             thread.start();
-            thread1.start();
-
-            TimeUnit.SECONDS.sleep(100);
+            System.out.println("begin");
+            System.out.println(futureTask.get());
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+    }
+
+    public static class Test implements Callable<Integer>{
+        @Override
+        public Integer call() throws Exception {
+            try {
+                TimeUnit.SECONDS.sleep(10);
+            }catch (Exception e){
+
+            }
+            return 10000;
+        }
     }
 
 }
