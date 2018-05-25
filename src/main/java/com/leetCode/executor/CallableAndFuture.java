@@ -33,14 +33,17 @@ public class CallableAndFuture {
 
         CallableClass callableClass = new CallableClass();
         Future<String> future = executor.submit(callableClass);
+
+        FutureTask<String> futureTask = new FutureTask<>(callableClass);
+        executor.submit(futureTask);
         try {
             System.out.println(future.get());
+            System.out.println(futureTask.get());
         } catch (InterruptedException e) {
             e.printStackTrace();
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
         executor.shutdown();
     }
 
