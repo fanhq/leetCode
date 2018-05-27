@@ -1,6 +1,9 @@
 package com.leetCode;
 
 
+import com.leetCode.common.MyTest;
+import com.leetCode.common.RunAbleClass;
+
 import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -19,28 +22,23 @@ public class Application {
      * @param args
      */
     public static void main(String[] args) {
+        ExecutorService executor = new ThreadPoolExecutor(4, 8, 0l, TimeUnit.MILLISECONDS, new LinkedBlockingQueue<>());
         try {
-            FutureTask futureTask = new FutureTask(new Test());
-            Thread thread = new Thread(futureTask);
-            thread.start();
-            System.out.println("begin");
-            System.out.println(futureTask.get());
+            MyTest myTest = new MyTest("hello");
+            RunAbleClass runAbleClass = new RunAbleClass(myTest);
+            executor.submit(runAbleClass);
+
+            executor.submit(new Runnable() {
+                @Override
+                public void run() {
+                    myTest.sayHi();
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    public static class Test implements Callable<Integer>{
-        @Override
-        public Integer call() throws Exception {
-            try {
-                TimeUnit.SECONDS.sleep(10);
-            }catch (Exception e){
-
-            }
-            return 10000;
-        }
-    }
 
 }
