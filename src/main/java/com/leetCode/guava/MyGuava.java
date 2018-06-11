@@ -3,6 +3,7 @@ package com.leetCode.guava;
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
 import com.google.common.io.Files;
+import com.google.common.util.concurrent.RateLimiter;
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -34,6 +35,7 @@ public class MyGuava {
 
             FileUtils.forceDelete(file);
 
+            RateLimiter limiter = RateLimiter.create(2);
 
             FileUtils.forceMkdir(new File("D:\\temp file\\测试"));
 
