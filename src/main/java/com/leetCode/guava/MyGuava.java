@@ -35,7 +35,9 @@ public class MyGuava {
 
             FileUtils.forceDelete(file);
 
+            //限流，每秒两次请求
             RateLimiter limiter = RateLimiter.create(2);
+            limiter.tryAcquire();
 
             FileUtils.forceMkdir(new File("D:\\temp file\\测试"));
 
