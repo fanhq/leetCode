@@ -35,26 +35,27 @@ public class CallableAndFuture {
     private static ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public static void main(String[] args) {
-        RunableClass runableClass = new RunableClass();
-        System.out.println("submit runable");
-        executor.submit(runableClass);
+//        RunableClass runableClass = new RunableClass();
+//        System.out.println("submit runable");
+//        executor.submit(runableClass);
+
+//        CallableClass callableClass = new CallableClass();
+//        System.out.println("submit callable");
+//        Future<String> future = executor.submit(callableClass);
+
+//        FutureTask<String> futureTask = new FutureTask<>(callableClass);
+//        System.out.println("submit futureTask");
+//        executor.submit(futureTask);
+//        try {
+//            System.out.println(future.get());
+//            System.out.println(futureTask.get());
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        } catch (ExecutionException e) {
+//            e.printStackTrace();
+//        }
 
         CallableClass callableClass = new CallableClass();
-        System.out.println("submit callable");
-        Future<String> future = executor.submit(callableClass);
-
-        FutureTask<String> futureTask = new FutureTask<>(callableClass);
-        System.out.println("submit futureTask");
-        executor.submit(futureTask);
-        try {
-            System.out.println(future.get());
-            System.out.println(futureTask.get());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
         // 使用guava提供的MoreExecutors工具类包装原始的线程池
         ListeningExecutorService listeningExecutor = MoreExecutors.listeningDecorator(executor);
         //向线程池中提交一个任务后，将会返回一个可监听的Future，该Future由Guava框架提供
@@ -65,7 +66,7 @@ public class CallableAndFuture {
             //耗时任务执行失败后回调该方法
             @Override
             public void onFailure(Throwable t) {
-                System.out.println("on failure" + t.getMessage());
+                System.out.println("on failure " + t.getMessage());
             }
 
             //耗时任务执行成功后回调该方法
@@ -75,7 +76,7 @@ public class CallableAndFuture {
             }
         }, executor);
 
-        executor.shutdown();
+        System.out.println("------------end--------------");
     }
 
 }
