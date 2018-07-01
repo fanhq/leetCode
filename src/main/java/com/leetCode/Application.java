@@ -1,10 +1,6 @@
 package com.leetCode;
 
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -26,21 +22,21 @@ public class Application {
      * @param args
      */
     public static void main(String[] args) {
-        List<String> processList = new ArrayList<String>();
         try {
-            Process  process = Runtime.getRuntime().exec("jps");
-            BufferedReader input = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            String line = null;
-            while ((line = input.readLine()) != null) {
-                processList.add(line);
-            }
-            input.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        int a = 1/0;
+                    }catch (Exception e){
 
-        for (String line : processList) {
-            System.out.println(line);
+                    }
+                }
+            });
+            thread.start();
+        } catch (Exception e) {
+            System.out.println("----------------");
+            e.printStackTrace();
         }
     }
 
