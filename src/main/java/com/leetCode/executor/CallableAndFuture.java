@@ -73,7 +73,7 @@ public class CallableAndFuture {
             public void onSuccess(String s) {
                 System.out.println("on success " + s);
             }
-        });
+        }, executor);
 
         executor.shutdown();
     }
