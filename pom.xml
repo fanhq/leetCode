@@ -260,6 +260,11 @@
             <version>${spring.version}</version>
         </dependency>
         <!-- springframe end -->
+        <dependency>
+            <groupId>com.rabbitmq</groupId>
+            <artifactId>amqp-client</artifactId>
+            <version>5.2.0</version>
+        </dependency>
 
     </dependencies>
 
