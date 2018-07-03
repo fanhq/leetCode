@@ -2,7 +2,10 @@ package com.leetCode.executor;
 
 import com.google.common.util.concurrent.*;
 
-import java.util.concurrent.*;
+import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Created by Hachel on 2018/3/8
@@ -54,7 +57,6 @@ public class CallableAndFuture {
 //        } catch (ExecutionException e) {
 //            e.printStackTrace();
 //        }
-
         CallableClass callableClass = new CallableClass();
         // 使用guava提供的MoreExecutors工具类包装原始的线程池
         ListeningExecutorService listeningExecutor = MoreExecutors.listeningDecorator(executor);
