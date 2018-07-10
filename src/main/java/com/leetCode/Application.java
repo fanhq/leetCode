@@ -1,6 +1,7 @@
 package com.leetCode;
 
 
+import java.util.UUID;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -23,17 +24,7 @@ public class Application {
      */
     public static void main(String[] args) {
         try {
-            Thread thread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        int a = 1/0;
-                    }catch (Exception e){
-
-                    }
-                }
-            });
-            thread.start();
+            System.out.println(UUID.randomUUID().toString());
         } catch (Exception e) {
             System.out.println("----------------");
             e.printStackTrace();
