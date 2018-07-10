@@ -32,12 +32,14 @@ public class Customer {
             public void handleDelivery(String consumerTag, Envelope envelope,
                                        AMQP.BasicProperties properties, byte[] body)
                     throws IOException {
-                String routingKey = envelope.getRoutingKey(); // 队列名称
-                String contentType = properties.getContentType(); // 内容类型
-                String content = new String(body, "utf-8"); // 消息正文
-                System.out.println("消息正文：" + content);
-                //手动确认消息【参数说明：参数一：该消息的index；参数二：是否批量应答，true批量确认小于index的消息】
-                channel.basicAck(envelope.getDeliveryTag(), false);
+//                String routingKey = envelope.getRoutingKey(); // 队列名称
+//                String contentType = properties.getContentType(); // 内容类型
+//                String content = new String(body, "utf-8"); // 消息正文
+//                System.out.println("消息正文：" + content);
+//                // 手动确认消息【参数说明：参数一：该消息的index；参数二：是否批量应答，true批量确认小于index的消息】
+//                channel.basicAck(envelope.getDeliveryTag(), false);
+                String message = new String(body, "UTF-8");
+                System.out.println("Customer Received:'" + message + "'");
             }
         };
         //自动回复队列应答 -- RabbitMQ中的消息确认机制
