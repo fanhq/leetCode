@@ -24,6 +24,8 @@ public class Application {
      */
     public static void main(String[] args) {
         try {
+            String a = "ss";
+            System.out.println(a.intern());
             System.out.println(UUID.randomUUID().toString());
         } catch (Exception e) {
             System.out.println("----------------");
