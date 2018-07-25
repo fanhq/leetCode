@@ -4,17 +4,15 @@ package com.leetCode.model;
  * Created by Hachel on 2018/3/20
  */
 public class Test001 {
-    private int age;
-    public Test001(){
-        this.age = 12;
-    }
+    private String age;
+    private String sex;
+    private String name;
 
-    public Test001 getEntity(){
-        return this;
-    }
-
-    public int setAndGet(int age){
-        this.age = age;
+    public String getAge() {
         return age;
+    }
+
+    public void setAge(String age) {
+        this.age = age;
     }
 }

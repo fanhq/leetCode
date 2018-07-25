@@ -18,6 +18,7 @@ public class Customer {
         factory.setHost("localhost");
         factory.setUsername("guest");
         factory.setPassword("guest");
+        factory.setPort(5672);
         //创建一个新的连接
         Connection connection = factory.newConnection();
         //创建一个通道

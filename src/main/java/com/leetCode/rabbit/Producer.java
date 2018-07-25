@@ -21,6 +21,7 @@ public class Producer {
         factory.setHost("localhost");
         factory.setUsername("guest");
         factory.setPassword("guest");
+        factory.setPort(5672);
         // factory.setPort(2088);
         //创建一个新的连接
         Connection connection = factory.newConnection();
