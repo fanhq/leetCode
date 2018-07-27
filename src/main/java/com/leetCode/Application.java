@@ -1,8 +1,6 @@
 package com.leetCode;
 
 
-import com.leetCode.model.Test001;
-
 import java.net.URL;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
@@ -27,9 +25,8 @@ public class Application {
      */
     public static void main(String[] args) {
         try {
-            Test001 test001 = new Test001();
-
-
+            String a ="https://smp-media-test.eos-beijing-1.cmecloud.cn/201807/16/D8BF6AD9ECD74E7884AD45275C8BCF59.png";
+            System.out.println(a.replace("https", "http"));
 
         } catch (Exception e) {
             System.out.println("----------------");
