@@ -49,12 +49,6 @@
             <version>3.2.1</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.ai.obc.iop.redis</groupId>
-            <artifactId>iop-reids-util</artifactId>
-            <version>1.0.0-RELEASES</version>
-        </dependency>
-
         <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
             <groupId>junit</groupId>
@@ -162,24 +156,6 @@
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
             <version>1.0.18</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ai.obc.iop.redis</groupId>
-            <artifactId>iop-reids-util</artifactId>
-            <version>1.0.3-RELEASES</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>com.ai.obc</groupId>
-            <artifactId>common-all</artifactId>
-            <version>1.0.5-RELEASES</version>
         </dependency>
 
         <dependency>
