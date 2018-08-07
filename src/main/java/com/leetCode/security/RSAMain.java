@@ -1,7 +1,7 @@
 package com.leetCode.security;
 
 
-import com.ai.obc.common.util.AESUtil;
+
 import org.apache.commons.io.FileUtils;
 
 import java.io.File;
@@ -38,8 +38,8 @@ public class RSAMain {
 //            System.out.println(new String(byteKey));
 
             String a = "我是原文";
-            byte[] b = AESUtil.encrypt(a.getBytes(), "qwertyui");
-            AESUtil.decrypt(b, "asdfghjk");
+//            byte[] b = AESUtil.encrypt(a.getBytes(), "qwertyui");
+//            AESUtil.decrypt(b, "asdfghjk");
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -89,7 +89,7 @@ public class RSAMain {
         try {
             String fileName = file.getName();
             if (fileName.toUpperCase().contains(".AVL")) {
-                AESUtil.decrypt(srcFile, destFile, key);
+               // AESUtil.decrypt(srcFile, destFile, key);
             } else if (fileName.toUpperCase().contains(".CHK")) {
                 FileUtils.copyFile(file, new File(destFile));
             } else {

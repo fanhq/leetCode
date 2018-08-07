@@ -25,8 +25,7 @@ public class Application {
      */
     public static void main(String[] args) {
         try {
-            String a ="https://smp-media-test.eos-beijing-1.cmecloud.cn/201807/16/D8BF6AD9ECD74E7884AD45275C8BCF59.png";
-            System.out.println(a.replace("https", "http"));
+            String afterTransformValue = Integer.toBinaryString(Integer.valueOf("96", 16));
 
         } catch (Exception e) {
             System.out.println("----------------");
