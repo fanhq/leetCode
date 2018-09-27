@@ -391,7 +391,7 @@ public class ExcelUtil {
      * @throws RuntimeException
      */
     public static <T> Collection<T> importExcel(Class<T> clazz, InputStream inputStream,
-                                                String pattern, ExcelLogs logs, Integer... arrayCount) {
+                                                String pattern, ExcelLogs logs, Integer... arrayCount) throws Exception{
         Workbook workBook;
         try {
             workBook = WorkbookFactory.create(inputStream);
@@ -454,7 +454,7 @@ public class ExcelUtil {
                     list.add((T) map);
 
                 } else {
-                    T t = clazz.newInstance();
+                    T t = clazz.getDeclaredConstructor().newInstance();
                     int arrayIndex = 0;// 标识当前第几个数组了
                     int cellIndex = 0;// 标识当前读到这一行的第几个cell了
                     List<FieldForSortting> fields = sortFieldByAnno(clazz);

@@ -15,7 +15,7 @@ import java.util.Map;
 public class CommonTest {
 
     @Test
-    public void excelTest(){
+    public void excelTest() throws Exception{
         File file = new File("D:\\work file\\云南虚拟机信息.xlsx");
         InputStream inputStream = null;
         try {

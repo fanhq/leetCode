@@ -1,6 +1,9 @@
 package com.leetCode;
 
 
+import com.alibaba.fastjson.JSON;
+import com.leetCode.common.MyTest;
+
 import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -23,7 +26,8 @@ public class Application {
      */
     public static void main(String[] args) {
         try {
-
+            MyTest test = new MyTest("hello");
+            System.out.println(JSON.toJSONString(test));
         } catch (Exception e) {
             e.printStackTrace();
         }

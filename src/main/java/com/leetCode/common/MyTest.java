@@ -7,6 +7,14 @@ public class MyTest {
 
     private String mark;
 
+    public String getMark() {
+        return mark;
+    }
+
+    public void setMark(String mark) {
+        this.mark = mark;
+    }
+
     public MyTest(String mark){
         this.mark = mark;
     }
