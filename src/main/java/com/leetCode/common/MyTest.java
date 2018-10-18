@@ -5,6 +5,8 @@ package com.leetCode.common;
  */
 public class MyTest {
 
+    public String name = new String("jane");
+
     private String mark;
 
     public String getMark() {
