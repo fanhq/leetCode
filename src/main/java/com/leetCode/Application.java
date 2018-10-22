@@ -1,8 +1,6 @@
 package com.leetCode;
 
 
-import reactor.core.publisher.Flux;
-
 import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -25,7 +23,9 @@ public class Application {
      */
     public static void main(String[] args) {
         try {
-            Flux.just("Hello", "World").subscribe(System.out::println);
+
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
