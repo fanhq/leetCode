@@ -8,6 +8,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
@@ -41,11 +42,20 @@ public class NewFeature {
         var client = HttpClient.newHttpClient();
         try {
             client.sendAsync(request, HttpResponse.BodyHandlers.ofString())
-                    .thenAccept(x ->{
-                        System.out.println("b");
-                        System.out.println(x.body());
-                    });
+                    .thenApply(HttpResponse::body)
+                    .thenAccept(x -> System.out.println(x));
         } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+        try {
+            TimeUnit.SECONDS.sleep(5);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
