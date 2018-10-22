@@ -42,7 +42,7 @@ public class ExecutorPool {
                 e.printStackTrace();
                 return 400;
             });
-            //接受一个参数，无返回结果
+            //接受一个参数，无返回结果 CompletableFuture
             future2.thenAccept(integer -> {
                 System.out.println(500);
             });
