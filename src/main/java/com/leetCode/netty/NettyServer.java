@@ -7,7 +7,8 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.http.*;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
 
 /**
@@ -24,12 +25,13 @@ public class NettyServer {
             // 启动服务
             ServerBootstrap serverBootstrap = new ServerBootstrap();
             serverBootstrap.group(bossGroup, workerGroup).channel(NioServerSocketChannel.class)
-                    .childHandler(new ChannelInitializer<SocketChannel>(){
+                    .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline pipeline = ch.pipeline();
-                            pipeline.addLast("httpServerCodec", new HttpServerCodec());
-                            pipeline.addLast("testHttpServerHandler", new TestHttpServerHandler());
+                            pipeline.addLast(new StringDecoder(CharsetUtil.UTF_8));
+                            pipeline.addLast(new StringEncoder(CharsetUtil.UTF_8));
+                            pipeline.addLast("testServerHandler", new TestServerHandler());
                         }
                     });
             ChannelFuture channelFuture = serverBootstrap.bind(8899).sync();
@@ -41,17 +43,14 @@ public class NettyServer {
         }
     }
 
-    public static class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObject> {
+    public static class TestServerHandler extends SimpleChannelInboundHandler<Object> {
 
 
         @Override
-        protected void channelRead0(ChannelHandlerContext ctx, HttpObject msg) throws Exception {
+        protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
+            System.out.println(msg);
             ByteBuf content = Unpooled.copiedBuffer("Hello World", CharsetUtil.UTF_8);
-            FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, content);
-            response.headers().set(HttpHeaderNames.CONTENT_TYPE, "text/plain");
-            response.headers().set(HttpHeaderNames.CONTENT_LENGTH, content.readableBytes());
-
-            ctx.writeAndFlush(response);
+            ctx.writeAndFlush(content);
         }
     }
 
