@@ -45,11 +45,10 @@ public class NettyServer {
 
     public static class TestServerHandler extends SimpleChannelInboundHandler<Object> {
 
-
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
             System.out.println(msg);
-            ByteBuf content = Unpooled.copiedBuffer("Hello World", CharsetUtil.UTF_8);
+            ByteBuf content = Unpooled.copiedBuffer("i am server", CharsetUtil.UTF_8);
             ctx.writeAndFlush(content);
         }
     }

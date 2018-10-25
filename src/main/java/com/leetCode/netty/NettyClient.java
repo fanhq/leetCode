@@ -38,7 +38,7 @@ public class NettyClient {
             );
 
             ChannelFuture channelFuture = bootstrap.connect("localhost", 8899).sync();
-            ByteBuf content = Unpooled.copiedBuffer("我是客户端请", CharsetUtil.UTF_8);
+            ByteBuf content = Unpooled.copiedBuffer("i am client", CharsetUtil.UTF_8);
             // 发送客户端的请求
             channelFuture.channel().writeAndFlush(content);
             channelFuture.channel().closeFuture().sync();
@@ -53,8 +53,8 @@ public class NettyClient {
 
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-            System.out.println(ctx.channel().remoteAddress());
-            System.out.println("client output: " + msg);
+            //System.out.println(ctx.channel().remoteAddress());
+            System.out.println("server response: " + msg);
             //ctx.writeAndFlush("from clinet: " + LocalDateTime.now());
         }
 
@@ -64,12 +64,5 @@ public class NettyClient {
             ctx.close();
         }
 
-        /**
-         * 如果不重写这个方法，运行程序后并不会触发数据的传输，因为双方都在等待read，所以要先发送一次消息。
-         */
-        @Override
-        public void channelActive(ChannelHandlerContext ctx) throws Exception {
-            ctx.channel().writeAndFlush("1");
-        }
     }
 }
