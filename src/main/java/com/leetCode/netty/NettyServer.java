@@ -29,9 +29,11 @@ public class NettyServer {
                         @Override
                         protected void initChannel(SocketChannel ch) throws Exception {
                             ChannelPipeline pipeline = ch.pipeline();
-                            pipeline.addLast(new StringDecoder(CharsetUtil.UTF_8));
-                            pipeline.addLast(new StringEncoder(CharsetUtil.UTF_8));
-                            pipeline.addLast("testServerHandler", new TestServerHandler());
+                            pipeline.addLast(new StringDecoder(CharsetUtil.UTF_8))
+                                    .addLast(new StringEncoder(CharsetUtil.UTF_8))
+                                    .addLast("testServerOutHandler1", new TestServerOutHandler())
+                                    .addLast("testServerOutHandler2", new TestServerOutHandler())
+                                    .addLast("testServerInHandler", new TestServerInHandler());
                         }
                     });
             ChannelFuture channelFuture = serverBootstrap.bind(8899).sync();
@@ -43,13 +45,22 @@ public class NettyServer {
         }
     }
 
-    public static class TestServerHandler extends SimpleChannelInboundHandler<Object> {
+    public static class TestServerInHandler extends SimpleChannelInboundHandler<Object> {
 
         @Override
         protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
-            System.out.println(msg);
+            System.out.println(ctx.name());
+            System.out.println("client request: " + msg);
             ByteBuf content = Unpooled.copiedBuffer("i am server", CharsetUtil.UTF_8);
             ctx.writeAndFlush(content);
+        }
+    }
+
+    public static class TestServerOutHandler extends ChannelOutboundHandlerAdapter {
+
+        @Override
+        public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) {
+            System.out.println(ctx.name());
         }
     }
 
