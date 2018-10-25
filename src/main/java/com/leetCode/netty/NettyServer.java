@@ -15,7 +15,7 @@ import io.netty.util.CharsetUtil;
  */
 public class NettyServer {
 
-    public static void start(int port) throws Exception {
+    public static void main(String args[]) throws Exception {
         // 分发任务
         EventLoopGroup bossGroup = new NioEventLoopGroup();
         // 实际处理的
