@@ -12,7 +12,6 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
 
-import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 
 /**
@@ -27,7 +26,7 @@ public class NettyServer {
         bootstrap
                 .group(eventLoopGroup, childEventLoopGroup)
                 .channel(NioServerSocketChannel.class)
-                .localAddress(new InetSocketAddress(9999))
+                //.localAddress(new InetSocketAddress(8088))
                 //对serversocketchannel的回调
                 .handler(new ChannelInitializer<ServerSocketChannel>() {
                     @Override
@@ -52,9 +51,16 @@ public class NettyServer {
                     }
                 });
         //等到绑定完成
-        ChannelFuture channelFuture = bootstrap.bind().sync();
+        //ChannelFuture channelFuture = bootstrap.bind().sync();
         //等到serversocketchannel close在退出
-        channelFuture.channel().closeFuture().sync();
+       // channelFuture.channel().closeFuture().sync();
+
+        ChannelFuture f = bootstrap.bind(8088).sync();
+
+        // Wait until the server socket is closed.
+        // In this example, this does not happen, but you can do that to gracefully
+        // shut down your server.
+        f.channel().closeFuture().sync();
 
     }
 

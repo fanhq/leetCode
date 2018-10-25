@@ -6,9 +6,6 @@ import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
-import io.netty.handler.codec.LineBasedFrameDecoder;
-import io.netty.handler.codec.string.StringEncoder;
-import io.netty.util.CharsetUtil;
 
 /**
  * Created by Hachel on 2018/10/25
@@ -23,13 +20,11 @@ public class NettyClient {
                 @Override
                 protected void initChannel(SocketChannel ch) throws Exception {
                     ChannelPipeline pipeline = ch.pipeline();
-                    pipeline.addLast("encoder", new StringEncoder(CharsetUtil.UTF_8));
-                    pipeline.addLast(new LineBasedFrameDecoder(Integer.MAX_VALUE));
                     pipeline.addLast(new NettyClientHandler());
                 }
 
             });
-            ChannelFuture channelFuture = bootstrap.connect("", 9).sync();
+            ChannelFuture channelFuture = bootstrap.connect("localhost", 8088).sync();
             Channel channel = channelFuture.channel();
             if (channel != null && channel.isOpen()) {
                 channel.writeAndFlush("hello world").sync();
