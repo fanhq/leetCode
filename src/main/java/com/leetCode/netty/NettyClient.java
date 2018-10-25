@@ -1,11 +1,17 @@
 package com.leetCode.netty;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
+import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
+import io.netty.handler.codec.LengthFieldPrepender;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.codec.string.StringEncoder;
+import io.netty.util.CharsetUtil;
+
+import java.time.LocalDateTime;
 
 /**
  * Created by Hachel on 2018/10/25
@@ -13,85 +19,56 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 public class NettyClient {
 
     public static void main(String[] args) {
-        EventLoopGroup group = new NioEventLoopGroup();
+        // 客户端只需要一个EventLoopGroup
+        EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
+
         try {
             Bootstrap bootstrap = new Bootstrap();
-            bootstrap.group(group).channel(NioSocketChannel.class).handler(new ChannelInitializer<SocketChannel>() {
-                @Override
-                protected void initChannel(SocketChannel ch) throws Exception {
-                    ChannelPipeline pipeline = ch.pipeline();
-                    pipeline.addLast(new NettyClientHandler());
-                }
+            bootstrap.group(eventLoopGroup).channel(NioSocketChannel.class).handler(
+                    new ChannelInitializer<SocketChannel>() {
+                        @Override
+                        protected void initChannel(SocketChannel ch) throws Exception {
+                            ChannelPipeline pipeline = ch.pipeline();
+                            pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 4, 0, 4));
+                            pipeline.addLast(new LengthFieldPrepender(4));
+                            pipeline.addLast(new StringDecoder(CharsetUtil.UTF_8));
+                            pipeline.addLast(new StringEncoder(CharsetUtil.UTF_8));
+                            // 最后添加我们自己的处理器
+                            pipeline.addLast(new MyClientHandler());
+                        }
+                    }
+            );
 
-            });
-            ChannelFuture channelFuture = bootstrap.connect("localhost", 8088).sync();
-            Channel channel = channelFuture.channel();
-            if (channel != null && channel.isOpen()) {
-                channel.writeAndFlush("hello world").sync();
-            } else {
-                throw new Exception("channel is null | closed");
-            }
-
+            ChannelFuture channelFuture = bootstrap.connect("localhost", 8899).sync();
+            channelFuture.channel().closeFuture().sync();
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
-            group.shutdownGracefully();
-
+            eventLoopGroup.shutdownGracefully();
         }
     }
 
-    public static class NettyClientHandler extends SimpleChannelInboundHandler<Object> {
-
-        private ByteBuf content;
-        private ChannelHandlerContext ctx;
+    public static class MyClientHandler extends SimpleChannelInboundHandler<String> {
 
         @Override
-        public void channelActive(ChannelHandlerContext ctx) {
-            this.ctx = ctx;
-
-            // Initialize the message.
-            content = ctx.alloc().directBuffer(256).writeZero(256);
-
-            // Send the initial messages.
-            generateTraffic();
+        protected void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
+            System.out.println(ctx.channel().remoteAddress());
+            System.out.println("client output: " + msg);
+            ctx.writeAndFlush("from clinet: " + LocalDateTime.now());
         }
 
         @Override
-        public void channelInactive(ChannelHandlerContext ctx) {
-            content.release();
-        }
-
-        @Override
-        public void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
-            // Server is supposed to send nothing, but if it sends something, discard it.
-        }
-
-        @Override
-        public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-            // Close the connection when an exception is raised.
+        public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
             cause.printStackTrace();
             ctx.close();
         }
 
-        long counter;
-
-        private void generateTraffic() {
-            // Flush the outbound buffer to the socket.
-            // Once flushed, generate the same amount of traffic again.
-            ctx.writeAndFlush(content.retainedDuplicate()).addListener(trafficGenerator);
+        /**
+         * 如果不重写这个方法，运行程序后并不会触发数据的传输，因为双方都在等待read，所以要先发送一次消息。
+         */
+        @Override
+        public void channelActive(ChannelHandlerContext ctx) throws Exception {
+            ctx.channel().writeAndFlush("1");
         }
-
-        private final ChannelFutureListener trafficGenerator = new ChannelFutureListener() {
-            @Override
-            public void operationComplete(ChannelFuture future) {
-                if (future.isSuccess()) {
-                    generateTraffic();
-                } else {
-                    future.cause().printStackTrace();
-                    future.channel().close();
-                }
-            }
-        };
-
     }
 }
