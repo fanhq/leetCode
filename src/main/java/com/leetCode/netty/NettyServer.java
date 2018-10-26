@@ -54,6 +54,13 @@ public class NettyServer {
             // ByteBuf content = Unpooled.copiedBuffer("i am server", CharsetUtil.UTF_8);
             ctx.writeAndFlush("i am server");
         }
+
+
+        @Override
+        public void channelActive(ChannelHandlerContext ctx) throws Exception {
+            System.out.println("execute channelActive");
+            super.channelActive(ctx);
+        }
     }
 
     public static class TestServerOutHandler extends ChannelOutboundHandlerAdapter {
