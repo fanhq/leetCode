@@ -1,8 +1,6 @@
 package com.leetCode.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -51,16 +49,17 @@ public class NettyServer {
         protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
             System.out.println(ctx.name());
             System.out.println("client request: " + msg);
-            ByteBuf content = Unpooled.copiedBuffer("i am server", CharsetUtil.UTF_8);
-            ctx.writeAndFlush(content);
+           // ByteBuf content = Unpooled.copiedBuffer("i am server", CharsetUtil.UTF_8);
+            ctx.writeAndFlush("i am server");
         }
     }
 
     public static class TestServerOutHandler extends ChannelOutboundHandlerAdapter {
 
         @Override
-        public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) {
-            System.out.println(ctx.name());
+        public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception{
+            System.out.println(ctx.name() + ":" + msg);
+            super.write(ctx, msg, promise);
         }
     }
 

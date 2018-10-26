@@ -1,8 +1,6 @@
 package com.leetCode.netty;
 
 import io.netty.bootstrap.Bootstrap;
-import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
@@ -38,9 +36,9 @@ public class NettyClient {
             );
 
             ChannelFuture channelFuture = bootstrap.connect("localhost", 8899).sync();
-            ByteBuf content = Unpooled.copiedBuffer("i am client", CharsetUtil.UTF_8);
+           // ByteBuf content = Unpooled.copiedBuffer("i am client", CharsetUtil.UTF_8);
             // 发送客户端的请求
-            channelFuture.channel().writeAndFlush(content);
+            channelFuture.channel().writeAndFlush("i am client");
             channelFuture.channel().closeFuture().sync();
         } catch (Exception e) {
             e.printStackTrace();
