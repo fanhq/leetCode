@@ -33,7 +33,8 @@ public class NettyServer {
                                     .addLast("testServerOutHandler2", new TestServerOutHandler())
                                     .addLast("testServerInHandler", new TestServerInHandler());
                         }
-                    });
+                    }).option(ChannelOption.SO_BACKLOG, 128)
+                    .childOption(ChannelOption.SO_KEEPALIVE, true);
             ChannelFuture channelFuture = serverBootstrap.bind(8899).sync();
             channelFuture.channel().closeFuture().sync();
 
@@ -49,7 +50,7 @@ public class NettyServer {
         protected void channelRead0(ChannelHandlerContext ctx, Object msg) throws Exception {
             System.out.println(ctx.name());
             System.out.println("client request: " + msg);
-           // ByteBuf content = Unpooled.copiedBuffer("i am server", CharsetUtil.UTF_8);
+            // ByteBuf content = Unpooled.copiedBuffer("i am server", CharsetUtil.UTF_8);
             ctx.writeAndFlush("i am server");
         }
     }
@@ -57,7 +58,7 @@ public class NettyServer {
     public static class TestServerOutHandler extends ChannelOutboundHandlerAdapter {
 
         @Override
-        public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception{
+        public void write(ChannelHandlerContext ctx, Object msg, ChannelPromise promise) throws Exception {
             System.out.println(ctx.name() + ":" + msg);
             super.write(ctx, msg, promise);
         }
