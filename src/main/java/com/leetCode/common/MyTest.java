@@ -17,6 +17,9 @@ public class MyTest {
         this.mark = mark;
     }
 
+    public MyTest(){
+    }
+
     public MyTest(String mark){
         this.mark = mark;
     }
@@ -25,4 +28,7 @@ public class MyTest {
         System.out.println(this.mark);
     }
 
+    public String sayHello(String record){
+        return record;
+    }
 }
