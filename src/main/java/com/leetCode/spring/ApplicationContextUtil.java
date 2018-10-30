@@ -1,4 +1,4 @@
-package com.leetCode.util;
+package com.leetCode.spring;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
