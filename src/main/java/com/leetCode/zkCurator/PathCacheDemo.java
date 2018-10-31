@@ -4,8 +4,6 @@ import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.framework.recipes.cache.ChildData;
 import org.apache.curator.framework.recipes.cache.PathChildrenCache;
-import org.apache.curator.framework.recipes.cache.PathChildrenCacheEvent;
-import org.apache.curator.framework.recipes.cache.PathChildrenCacheListener;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 
 /**
@@ -20,13 +18,10 @@ public class PathCacheDemo {
         client.start();
         PathChildrenCache cache = new PathChildrenCache(client, PATH, true);
         cache.start();
-        cache.getListenable().addListener(new PathChildrenCacheListener() {
-            @Override
-            public void childEvent(CuratorFramework client, PathChildrenCacheEvent event) throws Exception {
-                System.out.println("事件类型：" + event.getType());
-                if (null != event.getData()) {
-                    System.out.println("节点数据：" + event.getData().getPath() + " = " + new String(event.getData().getData()));
-                }
+        cache.getListenable().addListener((c, e) -> {
+            System.out.println("事件类型：" + e.getType());
+            if (null != e.getData()) {
+                System.out.println("节点数据：" + e.getData().getPath() + " = " + new String(e.getData().getData()));
             }
         });
         client.create().creatingParentsIfNeeded().forPath("/example/pathCache/test01", "01".getBytes());
