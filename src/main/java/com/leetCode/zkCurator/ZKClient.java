@@ -6,6 +6,8 @@ import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 import org.apache.zookeeper.CreateMode;
 
+import java.util.List;
+
 /**
  * Created by Hachel on 2018/4/26
  */
@@ -36,13 +38,22 @@ public class ZKClient {
             //更新数据
             client.setData().forPath("/data/path", "world".getBytes());
             data = client.getData().forPath("/data/path");
-            System.out.println(new String(data));
             //检查数据是否存在 返回等于null则不存在
-            client.checkExists().forPath("/data/path");
+            if (client.checkExists().forPath("/data/path") == null) {
+                System.out.println("not exist");
+            }else {
+                System.out.println(new String(data));
+            }
             //删除数据
             client.delete().deletingChildrenIfNeeded().forPath("/data/path");
-            data = client.getData().forPath("/data/path");
-            System.out.println(new String(data));
+            if (client.checkExists().forPath("/data/path") == null) {
+                System.out.println("not exist");
+            }else {
+                System.out.println(new String(data));
+            }
+            //获取子节点
+            List<String> childs = client.getChildren().forPath("/");
+            System.out.println(childs.size());
 
         } catch (Exception e) {
             e.printStackTrace();
