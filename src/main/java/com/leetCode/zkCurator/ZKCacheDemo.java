@@ -2,10 +2,7 @@ package com.leetCode.zkCurator;
 
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
-import org.apache.curator.framework.recipes.cache.ChildData;
-import org.apache.curator.framework.recipes.cache.NodeCache;
-import org.apache.curator.framework.recipes.cache.NodeCacheListener;
-import org.apache.curator.framework.recipes.cache.PathChildrenCache;
+import org.apache.curator.framework.recipes.cache.*;
 import org.apache.curator.retry.ExponentialBackoffRetry;
 
 /**
@@ -15,7 +12,9 @@ public class ZKCacheDemo {
 
     private static final String PATH_CACHE = "/example/pathCache";
 
-    private static final String NODE_CACHE = "/example/pathCache";
+    private static final String NODE_CACHE = "/example/nodeCache";
+
+    private static final String TREE_CACHE = "/example/treeCache";
 
     public static void main(String[] args) throws Exception {
         CuratorFramework client = CuratorFrameworkFactory.newClient("127.0.0.1:2181", new ExponentialBackoffRetry(1000, 3));
@@ -47,6 +46,7 @@ public class ZKCacheDemo {
         System.out.println("=========================OK==========================");
 
         //Node Cache
+        client.create().creatingParentsIfNeeded().forPath(NODE_CACHE);
         final NodeCache nCache = new NodeCache(client, NODE_CACHE);
         nCache.getListenable().addListener(new NodeCacheListener() {
             @Override
@@ -67,6 +67,21 @@ public class ZKCacheDemo {
         client.delete().deletingChildrenIfNeeded().forPath(NODE_CACHE);
         Thread.sleep(2000);
         nCache.close();
+        System.out.println("=========================OK==========================");
+
+        //Tree cache
+        client.create().creatingParentsIfNeeded().forPath(TREE_CACHE);
+        TreeCache cache = new TreeCache(client, TREE_CACHE);
+        cache.getListenable().addListener((c, e) ->
+                System.out.println("事件类型：" + e.getType() + " | 路径：" + (null != e.getData() ? e.getData().getPath() : null)));
+        cache.start();
+        client.setData().forPath(TREE_CACHE, "01".getBytes());
+        Thread.sleep(100);
+        client.setData().forPath(TREE_CACHE, "02".getBytes());
+        Thread.sleep(100);
+        client.delete().deletingChildrenIfNeeded().forPath(TREE_CACHE);
+        Thread.sleep(1000 * 2);
+        cache.close();
         System.out.println("=========================OK==========================");
 
         client.close();
