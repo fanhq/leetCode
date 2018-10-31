@@ -9,7 +9,7 @@ import org.apache.curator.retry.ExponentialBackoffRetry;
 /**
  * Created by Hachel on 2018/10/31
  */
-public class PathCacheDemo {
+public class ZKCacheDemo {
 
     private static final String PATH = "/example/pathCache";
 
