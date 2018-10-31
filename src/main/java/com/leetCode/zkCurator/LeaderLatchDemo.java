@@ -23,8 +23,7 @@ public class LeaderLatchDemo {
         List<LeaderLatch> examples = Lists.newArrayList();
         try {
             for (int i = 0; i < CLIENT_QTY; i++) {
-                CuratorFramework client
-                        = CuratorFrameworkFactory.newClient("127.0.0.1:2181", new ExponentialBackoffRetry(20000, 3));
+                CuratorFramework client = CuratorFrameworkFactory.newClient("127.0.0.1:2181", new ExponentialBackoffRetry(20000, 3));
                 clients.add(client);
                 LeaderLatch latch = new LeaderLatch(client, PATH, "Client #" + i);
                 latch.addListener(new LeaderLatchListener() {
@@ -67,8 +66,9 @@ public class LeaderLatchDemo {
             System.out.println("release the leader " + currentLeader.getId());
         } finally {
             for (LeaderLatch latch : examples) {
-                if (null != latch.getState())
+                if (null != latch.getState() && latch.getState() != LeaderLatch.State.CLOSED) {
                     CloseableUtils.closeQuietly(latch);
+                }
             }
             for (CuratorFramework client : clients) {
                 CloseableUtils.closeQuietly(client);
