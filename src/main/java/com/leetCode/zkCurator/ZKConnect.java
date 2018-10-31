@@ -13,13 +13,12 @@ public class ZKConnect {
 
 
     public static void main(String[] args) {
-        //String connectionString = "127.0.0.1:2181";
-        String connectionString = "10.1.241.103:2181";
+        String connectionString = "127.0.0.1:2181";
         int sessionTimeout = 30000;
         try {
             ZooKeeper zk = new ZooKeeper(connectionString, sessionTimeout, null);
-            zk.addAuthInfo("digest", ":".getBytes());
-            List<String> children = zk.getChildren("/iop/rpc/smsgate-rpc", new Watcher() {
+           // zk.addAuthInfo("digest", ":".getBytes());
+            List<String> children = zk.getChildren("/", new Watcher() {
                 public void process(WatchedEvent event) {
                     System.out.println("this is children node event");
                     System.out.println(event);
