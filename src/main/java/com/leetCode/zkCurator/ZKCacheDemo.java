@@ -21,6 +21,7 @@ public class ZKCacheDemo {
         client.start();
 
         //PathChildrenCache
+        System.out.println("=========================PathChildrenCache==========================");
         PathChildrenCache pCache = new PathChildrenCache(client, PATH_CACHE, true);
         pCache.start();
         pCache.getListenable().addListener((c, e) -> {
@@ -43,9 +44,9 @@ public class ZKCacheDemo {
         client.delete().forPath("/example/pathCache/test02");
         Thread.sleep(2000);
         pCache.close();
-        System.out.println("=========================OK==========================");
 
         //Node Cache
+        System.out.println("=========================NodeCache==========================");
         client.create().creatingParentsIfNeeded().forPath(NODE_CACHE);
         NodeCache nCache = new NodeCache(client, NODE_CACHE);
         nCache.getListenable().addListener(new NodeCacheListener() {
@@ -67,9 +68,9 @@ public class ZKCacheDemo {
         client.delete().deletingChildrenIfNeeded().forPath(NODE_CACHE);
         Thread.sleep(2000);
         nCache.close();
-        System.out.println("=========================OK==========================");
 
         //Tree cache
+        System.out.println("=========================TreeCache==========================");
         client.create().creatingParentsIfNeeded().forPath(TREE_CACHE);
         TreeCache cache = new TreeCache(client, TREE_CACHE);
         cache.getListenable().addListener((c, e) ->
@@ -82,7 +83,6 @@ public class ZKCacheDemo {
         client.delete().deletingChildrenIfNeeded().forPath(TREE_CACHE);
         Thread.sleep(1000 * 2);
         cache.close();
-        System.out.println("=========================OK==========================");
 
         client.close();
 
