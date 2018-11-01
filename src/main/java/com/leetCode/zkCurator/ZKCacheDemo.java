@@ -47,7 +47,7 @@ public class ZKCacheDemo {
 
         //Node Cache
         client.create().creatingParentsIfNeeded().forPath(NODE_CACHE);
-        final NodeCache nCache = new NodeCache(client, NODE_CACHE);
+        NodeCache nCache = new NodeCache(client, NODE_CACHE);
         nCache.getListenable().addListener(new NodeCacheListener() {
             @Override
             public void nodeChanged() throws Exception {
