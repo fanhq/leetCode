@@ -69,6 +69,10 @@ public class ZKClient {
             //完成业务流程, 释放锁
             mutex.release();
 
+            client.create().creatingParentsIfNeeded().withMode(CreateMode.EPHEMERAL_SEQUENTIAL).forPath("/curator/lock/");
+
+            System.out.println(client.getChildren().forPath("/curator/lock").size());
+
             //关闭客户端
             client.close();
 

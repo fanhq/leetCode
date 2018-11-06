@@ -19,11 +19,13 @@ public class Application {
     private static ExecutorService executor = new ThreadPoolExecutor(4, 8, 0l, TimeUnit.MILLISECONDS, queue);
 
     /**
-     * @param args
+     * @param argsArrayList
      */
     public static void main(String[] args) {
         try {
-
+            int i = 5;
+            long j = 8;
+            System.out.println(i+=j);
 
         } catch (Exception e) {
             e.printStackTrace();
