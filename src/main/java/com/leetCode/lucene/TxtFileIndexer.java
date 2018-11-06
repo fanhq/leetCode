@@ -47,7 +47,7 @@ public class TxtFileIndexer {
 
         // 3. 创建Document 对象 field
         Document document;
-        File file = new File("D:/sublime file");
+        File file = new File("D:\\file\\oneNet");
         for (File f : file.listFiles()) {
             document = new Document();
 
@@ -82,7 +82,7 @@ public class TxtFileIndexer {
         QueryParser queryParser = new QueryParser("content", new StandardAnalyzer());
 
         // 创建Query，表示搜索域中的内容
-        Query query = queryParser.parse("love");
+        Query query = queryParser.parse("TCP");
 
         // 5. 搜索并返回 TopDocs
         TopDocs topDocs = indexSearcher.search(query, 10);

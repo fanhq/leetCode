@@ -69,8 +69,8 @@ public class Searcher {
             Document doc = is.doc(scoreDoc.doc);
             System.out.println(doc.get("fullPath"));
             System.out.println(doc.get("fileName"));
+            System.out.println(doc.get("contents"));
         }
-
         // 关闭reader
         reader.close();
     }
