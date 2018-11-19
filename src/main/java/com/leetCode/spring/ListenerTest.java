@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
 public class ListenerTest implements ApplicationListener<EventTest> {
     @Override
     public void onApplicationEvent(EventTest event) {
-        System.out.println("test1:" + event.getMessage());
+        System.out.println("onApplicationEvent test:" + event.getMessage());
     }
 }
