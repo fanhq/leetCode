@@ -9,8 +9,10 @@ public class Main {
 
     public static void main(String[] args) {
         AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(SpringConfiguration.class);
-        EventPbulish eventPbulish = context.getBean(EventPbulish.class);
-        eventPbulish.publish("zhangsan");
+//        EventPbulish eventPbulish = context.getBean(EventPbulish.class);
+//        eventPbulish.publish("zhangsan");
+        ApplicationEventPublisherUtil.getPublisher().publishEvent(new EventTest(context, "hello"));
+
         context.close();
     }
 }
