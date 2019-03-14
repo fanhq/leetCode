@@ -17,10 +17,11 @@ import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
-import org.apache.lucene.store.RAMDirectory;
+import org.apache.lucene.store.SimpleFSDirectory;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 /**
  * Created by Hachel on 2018/11/5
@@ -28,7 +29,7 @@ import java.io.IOException;
 public class TxtFileIndexer {
     public static void main(String[] args) throws Exception {
         // 存放在内存中
-        Directory dir = new RAMDirectory();
+        Directory dir = new SimpleFSDirectory(Paths.get("D:\\file\\luceneIndex"));
         createIndex(dir);
         search(dir);
     }
@@ -63,6 +64,7 @@ public class TxtFileIndexer {
 
     /**
      * 根据内容搜索
+     *
      * @param dir
      * @throws Exception
      */
