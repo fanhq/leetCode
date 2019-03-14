@@ -22,6 +22,7 @@ public class FutureTaskTest {
         for (int j=0;j<50;j++){
             new Thread(new Runnable(){
 
+                @Override
                 public void run() {
                     for (int i=0;;i++){
                         //System.out.println("request " + i);
@@ -40,6 +41,7 @@ public class FutureTaskTest {
     public void request(){
         FutureTask<String> future =
                 new FutureTask<String>(new Callable<String>() {//使用Callable接口作为构造参数
+                    @Override
                     public String call() {
                         //真正的任务在这里执行，这里的返回值类型为String，可以为任意类型
                         String result ="";
