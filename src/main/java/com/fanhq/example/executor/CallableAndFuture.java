@@ -55,12 +55,12 @@ public class CallableAndFuture {
             e.printStackTrace();
         }
 
-
-        CallableClass callableClass = new CallableClass();
+        //guava
+        CallableClass callableClass2 = new CallableClass();
         // 使用guava提供的MoreExecutors工具类包装原始的线程池
         ListeningExecutorService listeningExecutor = MoreExecutors.listeningDecorator(executor);
         //向线程池中提交一个任务后，将会返回一个可监听的Future，该Future由Guava框架提供
-        ListenableFuture<String> lf = listeningExecutor.submit(callableClass);
+        ListenableFuture<String> lf = listeningExecutor.submit(callableClass2);
 
         //添加回调，回调由executor中的线程触发，但也可以指定一个新的线程
         Futures.addCallback(lf, new FutureCallback<String>() {
