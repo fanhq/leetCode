@@ -7,6 +7,6 @@ import org.springframework.context.annotation.Configuration;
  * Created by Hachel on 2018/11/19
  */
 @Configuration
-@ComponentScan(basePackages = "com.leetCode.spring")
+@ComponentScan(basePackages = "com.fanhq.example.spring")
 public class SpringConfiguration {
 }
