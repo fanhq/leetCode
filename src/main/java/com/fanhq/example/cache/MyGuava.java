@@ -1,4 +1,4 @@
-package com.fanhq.example.guava;
+package com.fanhq.example.cache;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
