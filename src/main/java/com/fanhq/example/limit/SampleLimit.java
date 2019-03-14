@@ -3,6 +3,7 @@ package com.fanhq.example.limit;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import com.google.common.util.concurrent.RateLimiter;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
@@ -54,6 +55,21 @@ public class SampleLimit {
                 //拒绝请求
             }
             //处理请求
+        } catch (Exception e) {
+
+        }
+    }
+
+    /**
+     * 限流3
+     */
+    public void sample03() {
+        try {
+            //每秒增加五个令牌
+            RateLimiter limiter = RateLimiter.create(5);
+            if (limiter.tryAcquire()) {
+                //处理请求
+            }
         } catch (Exception e) {
 
         }
