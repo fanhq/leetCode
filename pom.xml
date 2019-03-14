@@ -4,9 +4,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.fanhq</groupId>
-    <artifactId>leetCode</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>com.fanhq.example</groupId>
+    <artifactId>leetcode</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -14,7 +14,7 @@
         <spring.version>5.0.6.RELEASE</spring.version>
         <java.version>11</java.version>
     </properties>
-
+    <!-- 配置本地仓库 -->
     <!--<repositories>-->
         <!--<repository>-->
             <!--<id>carnet</id>-->
@@ -293,6 +293,11 @@
             <version>1.5.18</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-compress</artifactId>
+            <version>1.8</version>
+        </dependency>
 
     </dependencies>
     <build>
