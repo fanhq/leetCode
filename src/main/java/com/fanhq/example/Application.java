@@ -1,6 +1,8 @@
 package com.fanhq.example;
 
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -20,7 +22,8 @@ public class Application {
 
     public static void main(String[] args) {
         try {
-
+            Path path = Paths.get("D:\\file");
+            System.out.println(path.getFileName());
         } catch (Exception e) {
             e.printStackTrace();
         }
