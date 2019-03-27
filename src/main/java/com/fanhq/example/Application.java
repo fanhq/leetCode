@@ -1,6 +1,9 @@
 package com.fanhq.example;
 
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.concurrent.*;
@@ -24,6 +27,8 @@ public class Application {
         try {
             Path path = Paths.get("D:\\file");
             System.out.println(path.getFileName());
+            JSONObject jsonObject = JSON.parseObject("{\"a\" : \"a\"}");
+            System.out.println(jsonObject);
         } catch (Exception e) {
             e.printStackTrace();
         }

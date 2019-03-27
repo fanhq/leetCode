@@ -2,6 +2,8 @@ package com.fanhq.example.cache;
 
 import com.google.common.base.Charsets;
 import com.google.common.base.Strings;
+import com.google.common.hash.BloomFilter;
+import com.google.common.hash.Funnels;
 import com.google.common.io.Files;
 import com.google.common.util.concurrent.RateLimiter;
 import org.apache.commons.io.FileUtils;
@@ -46,4 +48,15 @@ public class MyGuava {
             e.printStackTrace();
         }
     }
+
+    public void  bloomFilter(){
+        BloomFilter<Integer> filter = BloomFilter.create(
+                Funnels.integerFunnel(),
+                500,
+                0.01);
+        filter.put(1);
+        filter.put(2);
+        filter.put(3);
+    }
+
 }
