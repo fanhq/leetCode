@@ -11,6 +11,7 @@ public class JavaVolitile {
 
     public static void main(String[] args) {
         final Thread thread = new Thread(new Runnable() {
+            @Override
             public void run() {
                 int i = 1;
                 while (flag){
