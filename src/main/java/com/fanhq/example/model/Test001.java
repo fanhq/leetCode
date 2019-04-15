@@ -1,12 +1,21 @@
 package com.fanhq.example.model;
 
+import jdk.jfr.Name;
+
+import java.io.Serializable;
+
 /**
  * Created by Hachel on 2018/3/20
  */
-public class Test001 {
+public class Test001 implements Serializable{
     private String age;
     private String sex;
     private String name;
+
+    @Name("turnon")
+    public void sayHi(Serializable hi){
+        System.out.println(hi);
+    }
 
     public String getAge() {
         return age;
