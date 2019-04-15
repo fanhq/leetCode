@@ -20,7 +20,8 @@ public class Application {
 
     public static void main(String[] args) {
         try {
-            System.out.println("12".equals(String.valueOf(12)));
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }
