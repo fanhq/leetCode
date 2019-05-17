@@ -9,6 +9,8 @@ public class Test003 extends Test002{
 
     private String b;
 
+    private Test001 deltaValue;
+
     public String getTest() {
         return test;
     }
@@ -23,5 +25,13 @@ public class Test003 extends Test002{
 
     public void setB(String b) {
         this.b = b;
+    }
+
+    public Test001 getDeltaValue() {
+        return deltaValue;
+    }
+
+    public void setDeltaValue(Test001 deltaValue) {
+        this.deltaValue = deltaValue;
     }
 }

@@ -1,7 +1,5 @@
 package com.fanhq.example.model;
 
-import jdk.jfr.Name;
-
 import java.io.Serializable;
 
 /**
@@ -12,7 +10,8 @@ public class Test001 implements Serializable{
     private String sex;
     private String name;
 
-    @Name("turnon")
+    private String value;
+
     public void sayHi(Serializable hi){
         System.out.println(hi);
     }
@@ -39,5 +38,13 @@ public class Test001 implements Serializable{
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 }
