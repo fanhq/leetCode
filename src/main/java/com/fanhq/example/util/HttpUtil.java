@@ -1,18 +1,17 @@
 package com.fanhq.example.util;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.http.Header;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.NameValuePair;
+import org.apache.http.*;
+import org.apache.http.client.HttpRequestRetryHandler;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.protocol.HttpClientContext;
 import org.apache.http.config.Registry;
 import org.apache.http.config.RegistryBuilder;
+import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.conn.socket.PlainConnectionSocketFactory;
 import org.apache.http.conn.ssl.NoopHostnameVerifier;
 import org.apache.http.conn.ssl.SSLConnectionSocketFactory;
@@ -28,8 +27,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLException;
+import javax.net.ssl.SSLHandshakeException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InterruptedIOException;
+import java.net.UnknownHostException;
 import java.nio.charset.Charset;
 import java.security.GeneralSecurityException;
 import java.security.cert.CertificateException;
@@ -49,7 +52,9 @@ public class HttpUtil {
 
     private static PoolingHttpClientConnectionManager connMgr;
     private static SSLConnectionSocketFactory sslsf;
+    private static HttpRequestRetryHandler retry;
     private static RequestConfig requestConfig;
+    private static final int RETRY_TIMES = 3;
     private static final int MAX_TIMEOUT = 3000;
     private static final String DEFAULT_CHARSET = "UTF-8";
     private static final String DEFAULT_CONTENT_TYPE = "application/json";
@@ -88,9 +93,63 @@ public class HttpUtil {
         configBuilder.setSocketTimeout(MAX_TIMEOUT);
         // 设置从连接池获取连接实例的超时
         configBuilder.setConnectionRequestTimeout(MAX_TIMEOUT);
-        // 在提交请求之前 测试连接是否可用(setStaleConnectionCheckEnabled过期方法已被替换)
-//        configBuilder.setStaleConnectionCheckEnabled(true);
         requestConfig = configBuilder.build();
+        //重试机制配置，如果直接放回false,不重试
+        retry = (exception, executionCount, context) -> {
+            // 如果已经重试了3次，就放弃
+            if (executionCount >= RETRY_TIMES) {
+                return false;
+            }
+            // 如果服务器丢掉了连接，那么就重试
+            if (exception instanceof NoHttpResponseException) {
+                return true;
+            }
+            // 不要重试SSL握手异常
+            if (exception instanceof SSLHandshakeException) {
+                return false;
+            }
+            // 超时
+            if (exception instanceof InterruptedIOException) {
+                return true;
+            }
+            // 目标服务器不可达
+            if (exception instanceof UnknownHostException) {
+                return false;
+            }
+            // 连接被拒绝
+            if (exception instanceof ConnectTimeoutException) {
+                return false;
+            }
+            // ssl握手异常
+            if (exception instanceof SSLException) {
+                return false;
+            }
+            HttpClientContext clientContext = HttpClientContext.adapt(context);
+            HttpRequest request = clientContext.getRequest();
+            // 如果请求是幂等的，就再次尝试
+            if (!(request instanceof HttpEntityEnclosingRequest)) {
+                return true;
+            }
+            return false;
+        };
+    }
+
+    /**
+     * 获取Http客户端连接对象
+     *
+     * @return Http客户端连接对象
+     */
+    public static CloseableHttpClient getHttpClient() {
+
+        // 创建httpClient
+        return HttpClients.custom()
+                // 把请求相关的超时信息设置到连接客户端
+                .setDefaultRequestConfig(requestConfig)
+                // 把请求重试设置到连接客户端
+                .setRetryHandler(retry)
+                // 配置连接池管理对象
+                .setConnectionManager(connMgr)
+                .build();
     }
 
     /**
