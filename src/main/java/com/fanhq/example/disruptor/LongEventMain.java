@@ -16,7 +16,7 @@ public class LongEventMain {
     public static void main(String[] args) throws InterruptedException {
 
         // The factory for the event
-        LongEventFactory factory = new LongEventFactory();
+        LongEventFactory eventFactory = new LongEventFactory();
 
         // Specify the size of the ring buffer, must be power of 2.
         int bufferSize = 1024;
@@ -24,7 +24,7 @@ public class LongEventMain {
         // Construct the Disruptor
         DefaultThreadFactory defaultThreadFactory = new DefaultThreadFactory();
         WaitStrategy waitStrategy = new BlockingWaitStrategy();
-        Disruptor<LongEvent> disruptor = new Disruptor<LongEvent>(factory, bufferSize, defaultThreadFactory, ProducerType.SINGLE, waitStrategy);
+        Disruptor<LongEvent> disruptor = new Disruptor<LongEvent>(eventFactory, bufferSize, defaultThreadFactory, ProducerType.SINGLE, waitStrategy);
 
         // Connect the handler
         disruptor.handleEventsWith(new LongEventHandler());
