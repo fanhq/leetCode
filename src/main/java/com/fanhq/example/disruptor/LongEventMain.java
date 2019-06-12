@@ -1,7 +1,10 @@
 package com.fanhq.example.disruptor;
 
+import com.lmax.disruptor.BlockingWaitStrategy;
 import com.lmax.disruptor.RingBuffer;
+import com.lmax.disruptor.WaitStrategy;
 import com.lmax.disruptor.dsl.Disruptor;
+import com.lmax.disruptor.dsl.ProducerType;
 
 import java.nio.ByteBuffer;
 
@@ -20,7 +23,8 @@ public class LongEventMain {
 
         // Construct the Disruptor
         DefaultThreadFactory defaultThreadFactory = new DefaultThreadFactory();
-        Disruptor<LongEvent> disruptor = new Disruptor<LongEvent>(factory, bufferSize, defaultThreadFactory);
+        WaitStrategy waitStrategy = new BlockingWaitStrategy();
+        Disruptor<LongEvent> disruptor = new Disruptor<LongEvent>(factory, bufferSize, defaultThreadFactory, ProducerType.SINGLE, waitStrategy);
 
         // Connect the handler
         disruptor.handleEventsWith(new LongEventHandler());
