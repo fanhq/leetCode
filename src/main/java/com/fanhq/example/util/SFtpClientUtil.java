@@ -13,6 +13,7 @@ import java.util.*;
 
 public class SFtpClientUtil {
 
+
     /**
      * 初始化日志引擎
      */
@@ -21,7 +22,7 @@ public class SFtpClientUtil {
     /**
      * Sftp
      */
-    ChannelSftp sftp;
+     ChannelSftp sftp;
     /**
      * 主机
      */
@@ -88,6 +89,7 @@ public class SFtpClientUtil {
     public void disconnect() throws Exception {
         if (this.sftp != null) {
             if (this.sftp.isConnected()) {
+                this.sftp.getSession().disconnect();
                 this.sftp.disconnect();
             } else if (this.sftp.isClosed()) {
                 logger.debug(SFtpClientUtil.class + " sftp is closed already");
@@ -116,6 +118,23 @@ public class SFtpClientUtil {
         }
         File file = new File(uploadFile);
         this.sftp.put(new FileInputStream(file), file.getName());
+    }
+
+    /**
+     * 上传单个文件
+     *
+     * @param directory  上传的目录
+     * @param uploadFile 要上传的文件
+     * @throws Exception
+     */
+    public void upload(String directory, File uploadFile) throws Exception {
+        try {
+            sftp.cd(directory);
+        } catch (SftpException e) {
+            sftp.mkdir(directory);
+            sftp.cd(directory);
+        }
+        this.sftp.put(new FileInputStream(uploadFile), uploadFile.getName());
     }
 
     /**

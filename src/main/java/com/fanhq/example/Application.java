@@ -1,24 +1,21 @@
 package com.fanhq.example;
 
 
-import java.util.concurrent.*;
-import java.util.concurrent.locks.ReentrantLock;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.fanhq.example.model.Test001;
 
 /**
  * Created by Hachel on 2018/1/2
  */
 public class Application {
 
-    private static volatile boolean falg = true;
-
-    private static ReentrantLock lock = new ReentrantLock();
-
-    private static BlockingQueue<Runnable> queue = new ArrayBlockingQueue<Runnable>(128);
-
-
-    private static ExecutorService executor = new ThreadPoolExecutor(4, 8, 0l, TimeUnit.MILLISECONDS, queue);
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception{
+        JSONObject jsonObject = new JSONObject();
+        jsonObject.put("name", "fanhaiqui");
+        jsonObject.put("fiile", "ss");
+        Test001 test001 = JSON.parseObject(jsonObject.toJSONString(), Test001.class);
+        System.out.println(test001);
 
     }
 
