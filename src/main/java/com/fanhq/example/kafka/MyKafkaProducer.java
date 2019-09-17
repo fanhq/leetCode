@@ -11,7 +11,7 @@ import java.util.Properties;
  * Created by Hachel on 2018/3/1
  */
 public class MyKafkaProducer {
-    public final static String TOPIC = "hachel";
+    public final static String TOPIC = "fanhq-topic";
 
     public static void main(String[] args) {
         Properties props = new Properties();
