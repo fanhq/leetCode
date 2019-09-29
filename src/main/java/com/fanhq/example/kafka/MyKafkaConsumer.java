@@ -15,20 +15,21 @@ public class MyKafkaConsumer {
 
     public static void main(String[] args) {
         Properties props = new Properties();
-        props.setProperty("bootstrap.servers", "127.0.0.0:9092");
+        props.setProperty("bootstrap.servers", "127.0.0.1:9092");
         props.setProperty("group.id", "test");
-        props.setProperty("enable.auto.commit", "true");
-        props.setProperty("auto.commit.interval.ms", "1000");
+        props.setProperty("enable.auto.commit", "false");
+        //props.setProperty("auto.commit.interval.ms", "1000");
+        //props.setProperty("max.poll.records", "100");
         props.setProperty("key.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         props.setProperty("value.deserializer", "org.apache.kafka.common.serialization.StringDeserializer");
         KafkaConsumer<String, String> consumer = new KafkaConsumer<>(props);
-        consumer.subscribe(Arrays.asList(MyKafkaProducer.TOPIC));
+        consumer.subscribe(Arrays.asList("test003"));
         while (true) {
-            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(1000));
+            ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(3000));
             for (ConsumerRecord<String, String> record : records){
                 System.out.printf("offset = %d, key = %s, value = %s%n", record.offset(), record.key(), record.value());
             }
-
+            consumer.commitSync();
         }
     }
 
