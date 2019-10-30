@@ -1,15 +1,23 @@
 package com.fanhq.example;
 
 
-import org.apache.commons.lang3.StringUtils;
-
 /**
  * Created by Hachel on 2018/1/2
  */
 public class Application {
 
+    private static ThreadLocal<String> t1 = new ThreadLocal<>();
+    private static ThreadLocal<String> t2 = new ThreadLocal<>();
+    static {
+        t1.set("t1");
+        t2.set("t2");
+    }
+
     public static void main(String[] args) throws Exception {
-        System.out.println(StringUtils.leftPad("12", 4, "0"));
+        System.out.println(t1.get());
+        System.out.println(t1.get());
+        System.out.println(t2.get());
+        System.out.println(t2.get());
     }
 
 
