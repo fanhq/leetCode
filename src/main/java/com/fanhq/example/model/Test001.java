@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by Hachel on 2018/3/20
  */
-public class Test001 implements Serializable{
+public class Test001 implements Serializable {
     private String age;
     private String sex;
     private String name;
@@ -13,17 +13,21 @@ public class Test001 implements Serializable{
     private int num;
 
     private String value;
-    private boolean succes;
+    private boolean success;
 
-    public boolean isSucces() {
-        return succes;
+    public void increment() {
+        this.num = num + 1;
     }
 
-    public void setSucces(boolean succes) {
-        this.succes = succes;
+    public boolean isSuccess() {
+        return success;
     }
 
-    public void sayHi(Serializable hi){
+    public void setSuccess(boolean success) {
+        this.success = success;
+    }
+
+    public void sayHi(Serializable hi) {
         System.out.println(hi);
     }
 

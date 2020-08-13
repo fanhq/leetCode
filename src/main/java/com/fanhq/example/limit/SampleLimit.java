@@ -23,12 +23,11 @@ public class SampleLimit {
      */
     private LoadingCache<Long, AtomicLong> counter = CacheBuilder.newBuilder()
             .expireAfterWrite(2, TimeUnit.SECONDS)
-            .build(new CacheLoader<>() {
+            .build(new CacheLoader<Long, AtomicLong>() {
                 @Override
-                public AtomicLong load(Long aLong) throws Exception {
+                public AtomicLong load(Long key) throws Exception {
                     return new AtomicLong(0);
                 }
-
             });
 
     /**
