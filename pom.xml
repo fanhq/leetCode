@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- springframe 版本控制 -->
         <spring.version>5.1.5.RELEASE</spring.version>
-        <java.version>8</java.version>
+        <java.version>12</java.version>
     </properties>
     <!-- 配置本地仓库 -->
     <!--<repositories>-->
@@ -311,11 +311,6 @@
             <version>3.4.2</version>
         </dependency>
         <dependency>
-            <groupId>commons-codec</groupId>
-            <artifactId>commons-codec</artifactId>
-            <version>1.13</version>
-        </dependency>
-        <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-core_2.12</artifactId>
             <version>2.4.4</version>
@@ -360,11 +355,8 @@
             <artifactId>hbase-common</artifactId>
             <version>2.2.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.google.code.gson</groupId>
-            <artifactId>gson</artifactId>
-            <version>2.8.5</version>
-        </dependency>
+
+
     </dependencies>
     <build>
         <plugins>
