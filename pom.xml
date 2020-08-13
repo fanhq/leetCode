@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- springframe 版本控制 -->
         <spring.version>5.1.5.RELEASE</spring.version>
-        <java.version>12</java.version>
+        <java.version>8</java.version>
     </properties>
     <!-- 配置本地仓库 -->
     <!--<repositories>-->
