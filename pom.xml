@@ -12,7 +12,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <!-- springframe 版本控制 -->
         <spring.version>5.1.5.RELEASE</spring.version>
-        <java.version>11</java.version>
+        <java.version>8</java.version>
     </properties>
     <!-- 配置本地仓库 -->
     <!--<repositories>-->
@@ -309,6 +309,11 @@
             <groupId>com.lmax</groupId>
             <artifactId>disruptor</artifactId>
             <version>3.4.2</version>
+        </dependency>
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.13</version>
         </dependency>
         <dependency>
             <groupId>org.apache.spark</groupId>

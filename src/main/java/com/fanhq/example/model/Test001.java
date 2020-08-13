@@ -10,7 +10,18 @@ public class Test001 implements Serializable{
     private String sex;
     private String name;
 
+    private int num;
+
     private String value;
+    private boolean succes;
+
+    public boolean isSucces() {
+        return succes;
+    }
+
+    public void setSucces(boolean succes) {
+        this.succes = succes;
+    }
 
     public void sayHi(Serializable hi){
         System.out.println(hi);
@@ -46,5 +57,13 @@ public class Test001 implements Serializable{
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public int getNum() {
+        return num;
+    }
+
+    public void setNum(int num) {
+        this.num = num;
     }
 }

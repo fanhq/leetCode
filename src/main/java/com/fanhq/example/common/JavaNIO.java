@@ -23,7 +23,6 @@ public class JavaNIO {
                 byte[] data = buffer.array();
                 System.out.println(new String(data));
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -19,7 +19,7 @@ public class MyCache {
     private static Cache<String, String> cache = CacheBuilder.newBuilder()
             .concurrencyLevel(4)
             .expireAfterWrite(10, TimeUnit.SECONDS)
-            .maximumSize(1024)
+            .maximumSize(1)
             .recordStats()
             .build();
 
@@ -38,7 +38,7 @@ public class MyCache {
     public static void main(String[] args) {
         try {
             cache.put("a", "1");
-            cache.put("a", "2");
+            cache.put("b", "2");
             System.out.println(cache.getIfPresent("b"));
             while (true) {
                 try {
