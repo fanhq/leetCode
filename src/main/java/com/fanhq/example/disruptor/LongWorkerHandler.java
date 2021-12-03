@@ -2,8 +2,6 @@ package com.fanhq.example.disruptor;
 
 import com.lmax.disruptor.WorkHandler;
 
-import java.util.concurrent.TimeUnit;
-
 /**
  * @author fanhaiqiu
  * @date 2019/6/12
@@ -18,8 +16,8 @@ public class LongWorkerHandler implements WorkHandler<LongEvent> {
 
     @Override
     public void onEvent(LongEvent event) throws Exception {
-        TimeUnit.SECONDS.sleep(10);
-        System.out.println(this.handlerName);
-        System.out.println(event.getValue());
+        //TimeUnit.SECONDS.sleep(10);
+        //System.out.println(this.handlerName);
+        System.out.println("after:" + event.getValue());
     }
 }

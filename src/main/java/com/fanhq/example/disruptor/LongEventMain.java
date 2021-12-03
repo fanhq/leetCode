@@ -7,6 +7,7 @@ import com.lmax.disruptor.dsl.Disruptor;
 import com.lmax.disruptor.dsl.ProducerType;
 
 import java.nio.ByteBuffer;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author fanhaiqiu
@@ -19,12 +20,12 @@ public class LongEventMain {
         LongEventFactory eventFactory = new LongEventFactory();
 
         // Specify the size of the ring buffer, must be power of 2.
-        int bufferSize = 8;
+        int bufferSize = 4;
 
         // Construct the Disruptor
         DefaultThreadFactory defaultThreadFactory = new DefaultThreadFactory();
         WaitStrategy waitStrategy = new BlockingWaitStrategy();
-        Disruptor<LongEvent> disruptor = new Disruptor<LongEvent>(eventFactory, bufferSize, defaultThreadFactory, ProducerType.SINGLE, waitStrategy);
+        Disruptor<LongEvent> disruptor = new Disruptor<LongEvent>(eventFactory, bufferSize, defaultThreadFactory, ProducerType.MULTI, waitStrategy);
 
         // Connect the handler
         // disruptor.handleEventsWith(new LongEventHandler());
@@ -41,7 +42,8 @@ public class LongEventMain {
         LongEventProducer producer = new LongEventProducer(ringBuffer);
 
         ByteBuffer bb = ByteBuffer.allocate(8);
-        for (long l = 0; true; l++) {
+        for (long l = 0; l<24; l++) {
+            TimeUnit.SECONDS.sleep(1);
             bb.putLong(0, l);
             producer.onData(bb);
         }

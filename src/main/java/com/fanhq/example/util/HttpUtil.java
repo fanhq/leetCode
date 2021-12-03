@@ -78,7 +78,7 @@ public class HttpUtil {
             // 设置连接池
             connMgr = new PoolingHttpClientConnectionManager(registry);
             // 设置连接池大小
-            connMgr.setMaxTotal(100);
+            connMgr.setMaxTotal(128);
             connMgr.setDefaultMaxPerRoute(connMgr.getMaxTotal());
             // 在提交请求之前 测试连接是否可用(setStaleConnectionCheckEnabled过期方法已被替换)
             connMgr.setValidateAfterInactivity(300);

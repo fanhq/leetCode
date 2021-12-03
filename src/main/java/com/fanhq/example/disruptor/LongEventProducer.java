@@ -29,6 +29,7 @@ public class LongEventProducer {
             //用上面的索引取出一个空的事件用于填充
             // for the sequence
             LongEvent event = ringBuffer.get(sequence);
+            System.out.println("before:" + event.getValue());
             event.setValue(bb.getLong(0));
         } finally {
             //发布事件
