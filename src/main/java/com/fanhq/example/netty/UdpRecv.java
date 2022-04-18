@@ -1,20 +1,18 @@
-package com.fanhq.example.netty;;
+package com.fanhq.example.netty;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.UnpooledByteBufAllocator;
 import io.netty.channel.*;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.DatagramPacket;
 import io.netty.channel.socket.nio.NioDatagramChannel;
 import io.netty.util.CharsetUtil;
 
-import java.net.InetSocketAddress;
-import java.nio.charset.Charset;
+;
 
 public class UdpRecv {
 
-    public static Integer SPORT = 1112;
+    public static Integer SPORT = 6001;
     public static Integer DPORT = 1111;
 
     public static void main(String[] args) {
@@ -53,12 +51,12 @@ class MyHandlerRece extends SimpleChannelInboundHandler<DatagramPacket>{
         ByteBuf buf = msg.content();
         String strMsg = buf.toString(CharsetUtil.UTF_8);
         System.out.println("recv : "+strMsg);
-
-        InetSocketAddress remoteAddress = new InetSocketAddress("192.168.0.103", UdpRecv.DPORT);
-        ByteBuf byteBuf1 = new UnpooledByteBufAllocator(false).buffer();
-        byteBuf1.writeCharSequence("recv send :"+strMsg, Charset.forName("utf-8"));
-        DatagramPacket packet = new DatagramPacket(byteBuf1, remoteAddress);
-        ctx.writeAndFlush(packet);
+//
+//        InetSocketAddress remoteAddress = new InetSocketAddress("192.168.0.103", UdpRecv.DPORT);
+//        ByteBuf byteBuf1 = new UnpooledByteBufAllocator(false).buffer();
+//        byteBuf1.writeCharSequence("recv send :"+strMsg, Charset.forName("utf-8"));
+//        DatagramPacket packet = new DatagramPacket(byteBuf1, remoteAddress);
+//        ctx.writeAndFlush(packet);
     }
 
 }

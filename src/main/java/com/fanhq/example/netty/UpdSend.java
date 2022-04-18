@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 public class UpdSend {
 
     public static Integer SPORT = 1111;
-    public static Integer DPORT = 1112;
+    public static Integer DPORT = 6001;
 
     public static void main(String[] args) {
 
