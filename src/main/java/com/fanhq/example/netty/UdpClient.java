@@ -23,8 +23,8 @@ public class UdpClient  {
         EventLoopGroup group = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap();
         bootstrap.group(group)
-                .option(ChannelOption.SO_BROADCAST, true)
                 .channel(NioDatagramChannel.class)
+                .option(ChannelOption.SO_BROADCAST, true)
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel ch) throws Exception {
@@ -32,7 +32,7 @@ public class UdpClient  {
                         pipeline.addLast(new StringEncoder());
                     }
                 });
-        ChannelFuture channelFuture = bootstrap.bind(0).sync();
+        ChannelFuture channelFuture = bootstrap.bind(6002).sync();
 
         InetSocketAddress remoteAddress = new InetSocketAddress("192.168.0.103", 6001);
         ByteBuf byteBuf1 = new UnpooledByteBufAllocator(false).buffer();
