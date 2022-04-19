@@ -9,6 +9,8 @@ import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.util.CharsetUtil;
 
+import java.util.concurrent.TimeUnit;
+
 /**
  * Created by Hachel on 2018/10/25
  */
@@ -38,7 +40,16 @@ public class NettyClient {
             ChannelFuture channelFuture = bootstrap.connect("localhost", 8899).sync();
            // ByteBuf content = Unpooled.copiedBuffer("i am client", CharsetUtil.UTF_8);
             // 发送客户端的请求
-            channelFuture.channel().writeAndFlush("i am client");
+            Channel channel = channelFuture.channel();
+            channel.writeAndFlush("i am client");
+
+            TimeUnit.SECONDS.sleep(10);
+            channel.writeAndFlush("i am client");
+
+            TimeUnit.SECONDS.sleep(10);
+            ChannelFuture channelFuture1 = channel.writeAndFlush("i am client");
+            System.out.println(channelFuture.isSuccess());
+
             channelFuture.channel().closeFuture().sync();
         } catch (Exception e) {
             e.printStackTrace();

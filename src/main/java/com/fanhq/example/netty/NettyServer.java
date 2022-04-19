@@ -59,13 +59,13 @@ public class NettyServer {
             System.out.println(ctx.name());
             System.out.println("client request: " + msg);
             // ByteBuf content = Unpooled.copiedBuffer("i am server", CharsetUtil.UTF_8);
-            ctx.writeAndFlush("i am server");
+            //ctx.writeAndFlush("i am server");
         }
 
 
         @Override
         public void channelActive(ChannelHandlerContext ctx) throws Exception {
-            System.out.println("execute channelActive");
+            //System.out.println("execute channelActive");
             super.channelActive(ctx);
         }
     }

@@ -23,7 +23,8 @@ public class UpdSend {
         NioEventLoopGroup group = new NioEventLoopGroup();
         Bootstrap bootstrap = new Bootstrap();
 
-        bootstrap.group(group).channel(NioDatagramChannel.class).option(ChannelOption.SO_BROADCAST, true)
+        bootstrap.group(group).channel(NioDatagramChannel.class)
+                //.option(ChannelOption.SO_BROADCAST, true)
                 .handler(new ChannelInitializer<NioDatagramChannel>() {
 
                     @Override
@@ -34,7 +35,7 @@ public class UpdSend {
                 });
         try {
             Channel channel = bootstrap.bind(SPORT).sync().channel();
-            InetSocketAddress remoteAddress = new InetSocketAddress("192.168.0.103", DPORT);
+            InetSocketAddress remoteAddress = new InetSocketAddress("192.168.200.48", DPORT);
             for (int i = 0; i < 5; i++) {
                 TimeUnit.SECONDS.sleep(1);
                 String msg = "send " + i;
